@@ -1,0 +1,147 @@
+<div *ngIf="!libServ.isEmptyObj(config)" [ngSwitch]="config['filterType']">
+  <div *ngSwitchCase="'date_range'">
+    <span class="ui-float-label">Date Range</span>
+    <p-calendar
+      [(ngModel)]="rangeDates"
+      (onClose)="onDateSelected()"
+      selectionMode="range"
+      [readonlyInput]="true"
+      dateFormat="mm/dd/yy"
+      [maxDate]="today"
+      [minDate]="minDate"
+      [numberOfMonths]="2"
+      [showIcon]="true"
+    >
+      <p-footer>
+        <p-button
+          label="Yesterday"
+          (click)="changeDate('yesterday')"
+        ></p-button>
+        <p-button
+          label="Last 7 Days"
+          (click)="changeDate('last_7_days')"
+        ></p-button>
+        <p-button
+          label="Last 30 Days"
+          (click)="changeDate('last_30_days')"
+        ></p-button>
+        <p-button
+          label="This Month"
+          (click)="changeDate('this_month')"
+        ></p-button>
+        <p-button
+          label="Last Month"
+          (click)="changeDate('last_month')"
+        ></p-button>
+        <button
+          pButton
+          type="button"
+          label="Ok"
+          style="float: right"
+          (click)="onDateSelected()"
+          class="ui-button-success"
+        ></button>
+      </p-footer>
+    </p-calendar>
+  </div>
+  <div *ngSwitchCase="'single_date'">
+    <span class="ui-float-label">Date</span>
+    <p-calendar
+      [(ngModel)]="rangeDates[0]"
+      (onClose)="onDateSelected()"
+      dateFormat="mm/dd/yy"
+      [maxDate]="today"
+      [minDate]="minDate"
+      [showIcon]="true"
+    >
+      <p-footer>
+        <button
+          pButton
+          type="button"
+          label="Ok"
+          style="float: right"
+          (click)="onDateSelected()"
+          class="ui-button-success"
+        ></button>
+      </p-footer>
+    </p-calendar>
+  </div>
+  <div *ngSwitchCase="'single_month'">
+    <span class="ui-float-label">Month</span>
+    <p-calendar
+      [(ngModel)]="rangeDates[0]"
+      (onClose)="onDateSelected()"
+      view="month"
+      [maxDate]="today"
+      [minDate]="minDate"
+      dateFormat="mm/yy"
+      [yearNavigator]="true"
+      [showIcon]="true"
+      yearRange="2000:2030"
+    >
+      <p-footer>
+        <button
+          pButton
+          type="button"
+          label="Ok"
+          style="float: right"
+          (click)="onDateSelected()"
+          class="ui-button-success"
+        ></button>
+      </p-footer>
+    </p-calendar>
+  </div>
+  <div *ngSwitchCase="'month_range'">
+    <span class="ui-float-label">Month Range</span>
+    <div style="display: inline-block">
+      <span style="margin-right: 10px">
+        <p-calendar
+          [(ngModel)]="rangeDates[0]"
+          (onClose)="onDateSelected()"
+          view="month"
+          [maxDate]="today"
+          [minDate]="minDate"
+          dateFormat="mm/yy"
+          [yearNavigator]="true"
+          yearRange="2000:2030"
+          [showIcon]="true"
+        >
+          <!-- <p-footer>
+            <button
+              pButton
+              type="button"
+              label="Ok"
+              style="float: right"
+              (click)="onDateSelected()"
+              class="ui-button-success"
+            ></button>
+          </p-footer> -->
+        </p-calendar>
+      </span>
+      <span>
+        <p-calendar
+          [(ngModel)]="rangeDates[1]"
+          (onClose)="onDateSelected()"
+          [maxDate]="today"
+          [minDate]="rangeDates[0]"
+          view="month"
+          dateFormat="mm/yy"
+          [yearNavigator]="true"
+          yearRange="2000:2030"
+          [showIcon]="true"
+        >
+          <!-- <p-footer>
+            <button
+              pButton
+              type="button"
+              label="Ok"
+              style="float: right"
+              (click)="onDateSelected()"
+              class="ui-button-success"
+            ></button>
+          </p-footer> -->
+        </p-calendar>
+      </span>
+    </div>
+  </div>
+</div>

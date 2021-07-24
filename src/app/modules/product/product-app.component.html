@@ -1,0 +1,339 @@
+<div id="cpr-component">
+  <p class="page-title">Product Master</p>
+
+  <!-- -------------------------- Filters Container -------------------------- -->
+  <!-- <ym-filter-container
+    (filtersApplied)="onFiltersApplied($event)"
+  ></ym-filter-container> -->
+
+  <!-- <hr /> -->
+  <!-- ------------------------ Table 2 Component Start ------------------------ -->
+  <form [formGroup]="formNewRioModel">
+  <div class="ui-g-2 font-weight-bold">
+    <label for="prodCategory" style="float: right;"> Product Category :</label>
+  </div>
+  <div class="ui-g-3">
+    <p-dropdown [options]="prodCategoryOptions" (onChange)="getTableDataByCategory()" [(ngModel)]="selectedProdCategory" [filter]="true" filterBy="label"
+      formControlName="selectedProdCategory" name="selectedProdCategory" optionLabel="label" dataKey="key"
+      placeholder="Select Product Category"></p-dropdown>
+    <!-- <div *ngIf="
+        f['selectedProdCategory'].invalid && (f['selectedProdCategory'].dirty || f['selectedProdCategory'].touched)
+      " class="invalid-feedback">
+      <div *ngIf="f['selectedProdCategory'].errors.required">
+        Product Category is required
+      </div>
+    </div> -->
+  </div>
+</form>
+
+  <button
+    pButton
+    type="submit"
+    icon="fas fa-pencil-alt"
+    label="New Product"
+    iconPos="right"
+    class="ui-button-rounded ui-button-success edit-role-button"
+    style="float: right; margin-bottom: 1%;"
+    (click)="NewProduct()"></button>
+
+  <!-- <div
+    [hidden]="noTableData"
+    class="mt-1 mb-3 fr-cpr-table"
+    *ngIf="displayAggTable"
+    style="display: inline-block; width: 100%;"
+  > -->
+  <div
+    class="p-col-12 mt-1 order-table"
+    style="display: inline-block; width: 100%;"
+  >
+    <p-treeTable
+      #ttFlat
+      [value]="flatTableData"
+      [columns]="flatTableJson['selectedColumns']"
+      [paginator]="true"
+      [rows]="flatTableJson['page_size']"
+      [first]="flatTableJson['page']"
+      [totalRecords]="flatTableJson['totalRecords']"
+      [rowsPerPageOptions]="[10, 20, 50, 100]"
+      [lazy]="flatTableJson['lazy']"
+      [loading]="flatTableJson['loading']"
+      [sortMode]="flatTableJson['sortMode']"
+      [resizableColumns]="flatTableJson['resizableColumns']"
+      [columnResizeMode]="flatTableJson['columnResizeMode']"
+      [reorderableColumns]="flatTableJson['reorderableColumns']"
+      [frozenColumns]="flatTableJson['frozenCols']"
+      [frozenWidth]="flatTableJson['frozenWidth']"
+      [scrollable]="flatTableJson['scrollable']"
+      [scrollHeight]="flatTableJson['scrollHeight']"
+      [selectionMode]="flatTableJson['selectionMode']"
+      [(selection)]="flatTableJson['selectedColsModal']"
+      [dataKey]="flatTableJson['selectionDataKey']"
+      [metaKeySelection]="flatTableJson['metaKeySelection']"
+      [style]="{ width: '100%' }"
+    >
+      <!-- ----------------- Global Search and columns Show/Hide ----------------- -->
+
+      <ng-template pTemplate="caption">
+        <div
+          class="mb-1"
+          *ngIf="flatTableJson['showHideCols']"
+          style="text-align: left; float: left; display: inline-block;"
+        >
+          <p-multiSelect
+            [options]="flatTableJson['columns']"
+            [(ngModel)]="flatTableJson['selectedColumns']"
+            optionLabel="displayName"
+            maxSelectedLabels="1"
+            selectedItemsLabel="{0} columns selected"
+            [style]="{ minWidth: '200px' }"
+            defaultLabel="Choose Columns"
+          ></p-multiSelect>
+        </div>
+        <!-- <div class ="mt-2 note"><span>* GTE - Greater than Equal to,  LTE -  Less than Equal to </span></div> -->
+        <!-- <div
+          *ngIf="isExportReport && flatTableJson['export']"
+          style="text-align: left; float: right; display: inline-block;"
+          class="ml-3 mt-2"
+        >
+          <div data-html2canvas-ignore class="dropdown">
+            <span
+              class="dropdown-toggle"
+              style="cursor: pointer"
+              id="dropdownMenu1"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              title="Export to Excel/CSV/JSON"
+              aria-expanded="true"
+            >
+              <i
+                title="Export to Excel/CSV/JSON"
+                class="fas fa-download share-icon"
+                id="dropdownMenu1"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="true"
+              >
+                <span class="caret"></span> </i
+              >&nbsp;&nbsp;Export</span
+            >
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" (click)="exportTable('Excel')">
+                Excel
+              </a>
+              <a class="dropdown-item" (click)="exportTable('CSV')">
+                CSV
+              </a>
+
+            </div>
+          </div>
+        </div> -->
+        <!-- <div
+          *ngIf="flatTableJson['overallSearch']"
+          style="text-align: right; float: right; display: inline-block;"
+        >
+          <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+          <input class="search"
+            ymInput
+            pInputText
+            type="text"
+            size="30"
+            placeholder="Search All"
+            [(ngModel)]="searchvalue"
+            (ngModelChange)="onGlobalSearchChanged(searchvalue,flatTableColumnDef)"
+          />
+        </div> -->
+      </ng-template>
+
+      <!-- ------------------------- For frozen columns -------------------------- -->
+
+      <ng-template pTemplate="colgroup" let-columns>
+        <colgroup>
+          <col
+            *ngFor="let col of columns"
+            [ngStyle]="{ width: col['width'] + 'px' }"
+          />
+        </colgroup>
+      </ng-template>
+
+      <!-- ------------------------------- Header -------------------------------- -->
+
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th
+            *ngFor="let col of columns; let i = index"
+            [ttSortableColumn]="col.field"
+            ttResizableColumn
+            ttReorderableColumn
+            [ttSortableColumnDisabled]="!col['options']['colSort']"
+            [ttResizableColumnDisabled]="!col['options']['resizable']"
+            [ttReorderableColumnDisabled]="!col['options']['movable']"
+          >
+            {{ col.displayName }}
+            <p-treeTableSortIcon
+              [field]="col.field"
+              *ngIf="col['options']['colSort']"
+            >
+            </p-treeTableSortIcon>
+          </th>
+        </tr>
+
+        <tr *ngIf="flatTableJson['columnSearch']">
+
+            <ng-container *ngFor="let col of columns">
+              <th *ngIf="isHiddenColumn(col)">
+                <!-- <input
+                  ymInput
+                  pInputText
+                  type="text"
+                  [style.visibility]="
+                    col['options']['colSearch'] ? 'visible' : 'hidden'
+                  "
+                  (input)="
+                    tt.filter($event.target.value, col.field, col.filterMatchMode)
+                  "
+                /> -->
+                <input
+                  pInputText
+                  type="text"
+                  (input)="
+                  ttFlat.filter(
+                      $event.target.value,
+                      col.field,
+                      col.filterMatchMode
+                    )
+                  "
+                  [style.visibility]="
+                    col['options']['colSearch'] ? 'visible' : 'hidden'
+                  "
+                  style="width: 100%;border-radius: 5px;
+
+                  border: 1px solid #c8c8c8;
+                  padding: 1.3px;"                />
+              </th>
+            </ng-container>
+        </tr>
+      </ng-template>
+
+      <!-- -------------------------------- Body --------------------------------- -->
+
+      <ng-template
+        pTemplate="body"
+        let-rowNode
+        let-rowData="rowData"
+        let-columns="columns"
+      >
+        <tr>
+          <td
+            *ngFor="let col of columns; let i = index"
+            ttEditableColumn
+            [title]="
+              rowData[col.field] | formatNum: col.format:col.formatConfig
+            "
+          >
+            <p-treeTableCellEditor *ngIf="col['options']['editable']">
+              <ng-template pTemplate="input">
+                <input
+                  ymInput
+                  pInputText
+                  type="text"
+                  [(ngModel)]="rowData[col.field]"
+                  [ngStyle]="{ width: i == 0 ? '90%' : '100%' }"
+                />
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{
+                  rowData[col.field] | formatNum: col.format:col.formatConfig
+                }}
+              </ng-template>
+            </p-treeTableCellEditor>
+            <span *ngIf="!col['options']['editable']">
+              <span *ngIf="col.field != 'delete' && col.field != 'edit'">
+                {{
+                  rowData[col.field] | formatNum: col.format:col.formatConfig
+                }}
+              </span>
+              <span
+                *ngIf="col.field == 'delete'"
+                class="link-style-icon"
+                (click)="deleteProduct(rowData)"
+              >
+                <i class="far fa-trash-alt"></i>
+              </span>
+
+              <span
+                *ngIf="col.field == 'edit'"
+                class="link-style-icon"
+                (click)="editProduct(rowData)"
+              >
+                <i class="fas fa-pencil-alt"></i>
+              </span>
+            </span>
+            <!-- <span
+          *ngIf="
+            col.field !== 'delete'">
+            {{
+              rowData[col.field]
+                | formatNum: col.format:col.formatConfig
+            }}
+          </span> -->
+          </td>
+        </tr>
+      </ng-template>
+
+      <!-- ----------------------------- Frozen Body ----------------------------- -->
+
+      <ng-template
+      pTemplate="frozenbody"
+      let-rowNode
+      let-rowData="rowData"
+      let-columns="columns"
+    >
+      <tr style="background: #f4f4f4">
+        <td
+          *ngFor="let col of columns; let i = index"
+          [title]="
+            rowData[col.field] | formatNum: col.format:col.formatConfig
+          "
+        >
+          <p-treeTableToggler
+            *ngIf="i == 0"
+            [rowNode]="rowNode"
+          ></p-treeTableToggler>
+
+          <span
+          >
+            {{
+              rowData[col.field]
+                ? (rowData[col.field]
+                  | formatNum: col.format:col.formatConfig)
+                : ''
+            }}
+          </span>
+        </td>
+      </tr>
+    </ng-template>
+
+      <ng-template pTemplate="paginatorleft" let-state>
+        Showing {{ state.page * state.rows + 1 }} to
+        {{
+          state.rows * (state.page + 1) > state.totalRecords
+            ? state.totalRecords
+            : state.rows * (state.page + 1)
+        }}
+        of {{ state.totalRecords }} Records
+      </ng-template>
+
+      <!-- ------------------- Message to show for empty Data -------------------- -->
+
+      <!-- <ng-template pTemplate="emptymessage">
+        <tr>
+          <td [attr.colspan]="flatTableJson['columns'].length">
+            No data found.
+          </td>
+        </tr>
+      </ng-template> -->
+    </p-treeTable>
+  </div>
+  <!-- ------------------------- Table 2 Component End ------------------------- -->
+  <p-confirmDialog [style]="{ width: '50vw' }"></p-confirmDialog>
+</div>

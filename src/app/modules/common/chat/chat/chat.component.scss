@@ -1,0 +1,38 @@
+.current-user {
+  background-color: #bdeaff;
+  text-align: right;
+  border-radius: 15px;
+  padding:10px;
+  margin: 5px;
+  width: 300px;
+  float: right;
+}
+
+.other-users {
+  background-color: #dcf8c6;
+  border-radius: 15px;
+  padding: 10px;
+  margin: 5px;
+  width: 300px;
+  float: left;
+}
+
+.fa.fa-paper-plane.fa-2x:hover {
+  color: #1E6AFF !important;
+  cursor: pointer;
+}
+.fav fa fa-comments-o{
+  color: #1E6AFF !important;
+
+}
+.modal-dialog.daily-data-modal {
+  max-width: 950px;
+}
+p.disclaimer {
+  color: #999;
+  margin: 0px;
+  font-style: italic;
+  font-size: 13px;
+  width: 100%;
+  display: inline-block;
+}

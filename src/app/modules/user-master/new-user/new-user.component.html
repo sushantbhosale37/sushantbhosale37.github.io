@@ -1,0 +1,148 @@
+<div class="ui-fluid">
+  <form [formGroup]="formNewRowModel" (ngSubmit)="submitHandler()">
+    <div class="ui-g-12">
+      <div class="ui-g-2 font-weight-bold">
+        <label for="name"> Name :</label>
+      </div>
+      <div class="ui-g-3">
+        <input type="text" [(ngModel)]="name" id="name" name="name" pInputText placeholder="Full Name"
+          formControlName="name" [ngClass]="{
+            'is-invalid':
+              f['name'].invalid && (f['name'].dirty || f['name'].touched)
+          }" />
+        <div *ngIf="
+            f['name'].invalid && (f['name'].dirty || f['name'].touched)
+          " class="invalid-feedback">
+          <div *ngIf="f['name'].errors.required">
+            Name is required
+          </div>
+        </div>
+      </div>
+      <div class="ui-g-1"></div>
+      <div class="ui-g-2 font-weight-bold">
+        <label for="bDate">Birth Date :</label>
+      </div>
+      <div class="ui-g-3">
+        <p-calendar [(ngModel)]="bDate" id="bDate" name="bDate" [(ngModel)]="bDate" pInputText 
+          placeholder="Birth Date" [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
+          [maxDate]="maxDate" formControlName="bDate"></p-calendar>
+      </div>          
+    </div>
+
+    <div class="ui-g-12">
+      <div class="ui-g-2 font-weight-bold">
+        <label for="userName"> Login Name :</label>
+      </div>
+      <div class="ui-g-3">
+        <input type="text" [(ngModel)]="userName" id="userName" name="userName" pInputText placeholder="Login Name"
+          formControlName="userName" [ngClass]="{
+            'is-invalid':
+              f['userName'].invalid && (f['userName'].dirty || f['userName'].touched)
+          }" />
+        <div *ngIf="
+            f['userName'].invalid && (f['userName'].dirty || f['userName'].touched)
+          " class="invalid-feedback">
+          <div *ngIf="f['userName'].errors.required">
+            Login Name is required
+          </div>
+        </div>
+      </div> 
+      <div class="ui-g-1"></div>
+      <div class="ui-g-2 font-weight-bold">
+        <label for="userPassword"> Login Password :</label>
+      </div>
+      <div class="ui-g-3">
+        <input type="text" [(ngModel)]="userPassword" id="userPassword" name="userPassword" pInputText placeholder="Login Password"
+          formControlName="userPassword" [ngClass]="{
+            'is-invalid':
+              f['userPassword'].invalid && (f['userPassword'].dirty || f['userPassword'].touched)
+          }" />
+        <div *ngIf="
+            f['userPassword'].invalid && (f['userPassword'].dirty || f['userPassword'].touched)
+          " class="invalid-feedback">
+          <div *ngIf="f['userPassword'].errors.required">
+            Login Password is required
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ui-g-12">
+      <div class="ui-g-2 font-weight-bold">
+        <label for="designation">Designation :</label>
+      </div>
+      <div class="ui-g-3">
+        <input type="text" [(ngModel)]="designation" id="designation" name="designation" pInputText placeholder="Designation"
+          formControlName="designation" [ngClass]="{
+            'is-invalid':
+              f['designation'].invalid && (f['designation'].dirty || f['designation'].touched)
+          }" />
+        <div *ngIf="
+            f['designation'].invalid && (f['designation'].dirty || f['designation'].touched)
+          " class="invalid-feedback">
+          <div *ngIf="f['designation'].errors.required">
+            Designation is required
+          </div>
+        </div>
+      </div>  
+      <div class="ui-g-1"></div>
+      <div class="ui-g-2 font-weight-bold">
+        <label for="mobile"> Mobile No. :</label>
+      </div>
+      <div class="ui-g-3">
+        <input type="text" onkeyup="$(this).val($(this).val().replace(/[^0-9]/g, ''));" [(ngModel)]="mobile" id="mobile"
+          name="mobile" pInputText placeholder="Mobile No" formControlName="mobile" [ngClass]="{
+            'is-invalid':
+              f['mobile'].invalid && (f['mobile'].dirty || f['mobile'].touched)
+          }" />
+        <div *ngIf="
+            f['mobile'].invalid && (f['mobile'].dirty || f['mobile'].touched)
+          " class="invalid-feedback">
+          <div *ngIf="f['mobile'].errors.required">
+            Mobile is required
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ui-g-12">
+       <div class="ui-g-2 font-weight-bold">
+        <label for="avatar">Profile Pic :</label>
+      </div>
+      <div class="ui-g-3">
+        <input type="text" id="avatar" name="avatar" [(ngModel)]="avatar" pInputText placeholder="Profile Picture Path"
+          formControlName="avatar"/>
+      </div>
+      <div class="ui-g-1"></div>
+      <div class="ui-g-2 font-weight-bold">
+        <label for="userStatus"> Status :</label>
+      </div>
+      <div class="ui-g-3">
+        <p-dropdown [options]="UserStatusOptions" [(ngModel)]="selectedUserStatus" [filter]="true" filterBy="label"
+          formControlName="selectedUserStatus" name="selectedUserStatus" optionLabel="label" dataKey="key"
+          placeholder="Select Category Status" [ngClass]="{
+            'is-invalid':
+              f['selectedUserStatus'].invalid && (f['selectedUserStatus'].dirty || f['selectedUserStatus'].touched)
+          }"></p-dropdown>
+        <div *ngIf="
+            f['selectedUserStatus'].invalid && (f['selectedUserStatus'].dirty || f['selectedUserStatus'].touched)
+          " class="invalid-feedback">
+          <div *ngIf="f['selectedUserStatus'].errors.required">
+            Status is required
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="new-rio-footer">
+      <button pButton type="submit" label="Save" icon="fas fa-user-edit" class="ui-button-success"
+        [disabled]="!formNewRowModel.valid"></button>
+
+      <button pButton type="button" (click)="goBack()" label="Cancel" icon="far fa-times-circle"
+        class="ml-2 ui-button-warning"></button>
+    </div>
+
+
+  </form>
+</div>
+<p-confirmDialog appendTo="body" [style]="{ width: '50vw' }"></p-confirmDialog>

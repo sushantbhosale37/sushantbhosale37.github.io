@@ -1,0 +1,54 @@
+<div  id="modal-body" >
+  <div>
+    <div #scrollMe class="scrollcommentdata" style="height:250px; overflow:auto;">
+      <div *ngFor="let comment of messageArray">
+        <div [ngClass]="(comment.user_id === this.commentJson.user_id) ? 'current-user' : 'other-users'">
+          <p><b>{{comment.user_name}}</b></p>
+          <p style="white-space: pre-wrap">
+            {{comment.comment}}
+          </p>
+          <p style="text-align:right; margin:0;color:#808080">{{nowfrom(comment.inserted_at)}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div>
+    <div id="scrollCommentData" class="scrollcommentdata" style="height:250px; overflow:auto;">
+        <div ng-repeat="obj in vm.comments">
+            <div ng-class="(obj.user_id === vm.platformConfig.userContext.id) ? 'current-user' : 'other-users'">
+                <p><b>{{obj.name| uppercase}}</b></p>
+                <p style="white-space: pre-wrap">{{obj.comments}}</p>
+                <p style="text-align:right; margin:0;color:#808080">{{obj.comment_time| date :"EEEE, MMMM d, y h:mm:ss a"}}</p>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+
+  <div style="margin-top: 15px;">
+    <form
+      name="commentForm"
+      id="commentForm"
+      (ngSubmit)="sendMessage(commentData)"
+    >
+      <textarea
+        id="chat-message"
+        name="message"
+        [(ngModel)]="commentData"
+        (keydown)="checkNewLine($event)"
+        style="resize:none; width:90%; border-radius: 15px; height:40px; border:1px solid #ccc; outline:none; padding: 6px 12px;"
+      ></textarea>
+      <button
+        style="background: transparent; border: none; float: right; outline:none;"
+        type="submit"
+      >
+        <i
+          class="fa fa-paper-plane fa-2x"
+          aria-hidden="true"
+          style="color: #22b6fd; line-height: 2.5rem;"
+        ></i>
+      </button>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,65 @@
+<div class="app-container dashboard-page">
+    <!-- <p class="page-title">Dashboard Master</p> -->
+    <div class="ui-g-12">
+        <!-- ---------------------- Cards Container Component ---------------------- -->
+
+        <ym-cards *ngIf="showCards" [cardsJson]="cardsJson"></ym-cards>
+    </div>
+    <div class="ui-g borderMain">
+        <div class="ui-g-12 shortcuts">
+            <p>Shortcuts</p>
+            <!-- <hr> -->
+        </div>
+        <div class="ui-g-12">
+            <div class="ui-g-4 shotCutButton">
+                <button pButton type="submit" [routerLink]="['/customer']" label="Customer Master"
+                    style="background-color: #66de9b; border: 1px solid #66de9b;" icon="fas fa-user-edit"
+                    class="ui-button-success buttons"></button>
+            </div>
+            <div class="ui-g-4 shotCutButton">
+                <button pButton type="submit" [routerLink]="['/product']" label="Product Master"
+                    style="background-color: #e686ae; border: 1px solid #e686ae;" icon="fas fa-user-edit"
+                    class="ui-button-success buttons"></button>
+            </div>
+            <div class="ui-g-4 shotCutButton">
+                <button pButton type="submit" [routerLink]="['/order']" label="Order Master"
+                    style="background-color: #c3ee6f; border: 1px solid #c3ee6f;" icon="fas fa-user-edit"
+                    class="ui-button-success buttons"></button>
+            </div>
+        </div>
+
+
+        <div class="ui-g-12">
+            <div class="ui-g-4 shotCutButton">
+
+            </div>
+            <div class="ui-g-4 shotCutButton">
+                <button pButton type="submit" label="New Sales Transation" (click)="NewSales()"
+                    style="background-color: #f6d531; border: 1px solid #f6d531;" icon="fas fa-user-edit"
+                    class="ui-button-success buttons"></button>
+            </div>
+            <div class="ui-g-4 shotCutButton">
+
+            </div>
+        </div>
+
+
+        <div class="ui-g-12">
+            <div class="ui-g-4 shotCutButton">
+                <button  (click)="NewCustomer()" style="background-color: #7da1f0; border: 1px solid #7da1f0;" pButton type="submit"
+                    label="New Customer" icon="fas fa-user-edit" class="ui-button-success buttons"></button>
+            </div>
+            <div class="ui-g-4 shotCutButton">
+                <button pButton type="submit" label="New Product"  (click)="NewProduct()"
+                    style="background-color: #e4ac73; border: 1px solid #e4ac73;" icon="fas fa-user-edit"
+                    class="ui-button-success buttons"></button>
+            </div>
+            <div class="ui-g-4 shotCutButton">
+                <button pButton type="submit" label="New Order" (click)="NewCakeOrder()"
+                    style="background-color: #c67bff; border: 1px solid #c67bff;" icon="fas fa-user-edit"
+                    class="ui-button-success buttons"></button>
+            </div>
+        </div>
+    </div>
+
+</div>

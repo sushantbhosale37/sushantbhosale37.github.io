@@ -1,0 +1,66 @@
+.login-page {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    url("/assets/images/back.png") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  overflow: hidden;
+  margin: 0px;
+}
+
+.center {
+  text-align: center;
+  display: block;
+  margin-bottom: 9px;
+
+}
+.wel-come{
+  font-size: 22px;
+    font-weight: 600;
+    font-family: auto;
+    font-style: oblique;
+}
+.ui-g {
+  margin: 20px auto;
+  text-align: left;
+}
+
+.ui-card-panel {
+  background-color: #58161ea1;
+  color: #f1f5f8 !important;
+  border: 4px solid white;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
+}
+
+.login-card {
+  height: 49.8vh;
+  display: inline-block;
+  padding: 5% 13%;
+  color: #f1f5f8 !important;
+}
+
+input {
+  width: 100%;
+}
+
+img.logo-img {
+  width: 300px;
+  margin: 30px 0 10px;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.forgot-password,
+.forgot-password:hover,
+.forgot-password:active {
+  font-weight: bold;
+  font-size: 1rem;
+  color: #cbd8e2;
+}
+
+.ui-inputtext {
+  color: #9a9a9a;
+}

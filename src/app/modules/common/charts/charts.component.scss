@@ -1,0 +1,131 @@
+.share-icon {
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+.share-icon:hover {
+  opacity: 1;
+}
+
+.dropdown {
+  padding-left: 10px;
+  // display: inline-block;
+  // width: 100%;
+  position: inherit;
+}
+
+.disabled-scroll {
+  color: grey;
+  cursor: not-allowed !important;
+}
+
+.legends-container {
+  overflow: hidden;
+  padding: 5px 30px;
+  height: 35px;
+  position: relative;
+  width: 100%;
+
+  .navigation-icon {
+    font-family: "primeicons";
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    display: inline-block;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .navigation-icon-left {
+    width: 2rem;
+    text-align: center;
+    left: -10px;
+    top: 3px;
+    justify-content: center;
+    font-size: 2rem;
+    &::before {
+      content: "\e931";
+    }
+  }
+
+  .navigation-icon-right {
+    width: 2rem;
+    text-align: center;
+    right: -10px;
+    top: 3px;
+    justify-content: center;
+    font-size: 2rem;
+    &::before {
+      content: "\e932";
+    }
+  }
+
+  ul {
+    white-space: nowrap;
+    padding: 0;
+    overflow: hidden;
+    margin: 2px 0;
+
+    li {
+      color: #333;
+      cursor: pointer;
+      max-width: 300px;
+      overflow: hidden;
+      display: inline;
+      padding: 5px;
+      text-overflow: ellipsis;
+      &.excluded {
+        text-decoration: line-through;
+      }
+
+      .legend-item {
+        display: inline-block;
+        height: 15px;
+        margin-right: 5px;
+        width: 40px;
+        text-align: center;
+        vertical-align: text-top;
+        justify-content: center;
+      }
+    }
+  }
+}
+.margin-top {
+  margin-top: 0px;
+}
+.calculation-box {
+  text-align: center;
+  border: 0.5px solid #4a4949de;
+  padding: 5px;
+  font-size: 11px;
+  margin-right: 2px;
+}
+.calculate-color {
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 5px;
+  width: 11px;
+  height: 11px;
+  float: left;
+  margin-top: 2px;
+}
+
+.pop-over-cal {
+  display: none;
+  background: #fff;
+  position: absolute;
+  // right: 30px;
+  z-index: 10;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #000;
+}
+
+.popover-container:hover .pop-over-cal {
+  display: block;
+}

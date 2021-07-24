@@ -1,0 +1,88 @@
+<p-panel [collapsed]="collapsed" styleClass="filter-container-panel" *ngIf="!libServ.isEmptyObj(appConfig)">
+  <p-header>
+    <span class="ui-panel-title filter-title">Filters</span>
+    <i class="pi pi-filter filter-container-icon"></i>
+    <div *ngIf="appConfig['filter']['saveView']">
+      <p-dropdown *ngIf="savedViews.length > 0" [options]="savedViews" [(ngModel)]="selectedSavedView"
+        placeholder="Select View" optionLabel="state_name" dataKey="id" [style]="{ 'min-width': '200px' }"
+        (onChange)="viewChanged()" #metricsDropdown class="ml-2">
+        <ng-template let-view pTemplate="item">
+          <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+            <div style="font-size:14px;margin-top:4px" [ngStyle]="{
+                    'font-weight':
+                      view.value.is_default == 'true' ? 'bold' : 'normal'
+                  }">
+              {{ view.label }}
+            </div>
+          </div>
+        </ng-template>
+      </p-dropdown>
+
+      <p-dialog [(visible)]="displaySaveViewConfirmDialog" [style]="{ width: '500px' }">
+        <p-header>
+          Save View
+        </p-header>
+        <div class="ui-g">
+          <div class="ui-g-6"><b>Enter View Name:</b></div>
+          <div class="ui-g-6">
+            <input type="text" placeholder="Enter View Name" [(ngModel)]="saveViewName" ymInput pInputText />
+          </div>
+        </div>
+        <div class="ui-g">
+          <div class="ui-g-6">
+            <b>Set Default?</b>
+          </div>
+          <div class="ui-g-6">
+            <p-checkbox [(ngModel)]="setDefaultCheckbox" binary="true"></p-checkbox>
+          </div>
+        </div>
+
+        <p-footer>
+          <button [disabled]="saveViewName.length == 0" type="button" pButton icon="pi pi-check"
+            (click)="displaySaveViewConfirmDialog = false; saveQuery()" label="Save"></button>
+          <button type="button" pButton icon="pi pi-times" (click)="displaySaveViewConfirmDialog = false" label="Cancel"
+            class="ui-button-secondary"></button>
+        </p-footer>
+      </p-dialog>
+      <button pButton type="button" (click)="displaySaveViewConfirmDialog = true" icon="pi pi-save" label="Save As"
+        iconPos="right" class="ui-button-primary ml-2"></button>
+    </div>
+    <button pButton type="button" iconPos="right" class="float-right ui-button-secondary btn-showhide"
+      label="{{ collapsed ? 'Show' : 'Hide' }}" icon="{{ collapsed ? 'fa fa-plus' : 'fa fa-minus' }}"
+      (click)="collapsed = !collapsed"></button>
+  </p-header>
+
+  <div class="row">
+      <div class="loaderdiv" *ngIf="displayLoad">
+          <p-progressSpinner class="ajax-loader"></p-progressSpinner>
+      </div>
+    <ym-daterange-picker [appConfig]="appConfig" (datePickerChanged)="selectedDates = $event; datePickerChanged()"
+      *ngIf="enableDatePicker"></ym-daterange-picker>
+
+    <ng-container *ngIf="
+            (defaultDimensions.length > 0 || availableDimensions.length > 0) &&
+            dimFilterFlag
+          ">
+      <ym-dim-filter class="ml-2" style="flex: 1;" [defaultDimensions]="defaultDimensions"
+        [availableDimensions]="availableDimensions" [selectedDates]="selectedDates"
+        [dateDimensionRelation]="dateDimensionRelation" [filterUrl]="filterUrl"
+        (dimFilterChanged)="selectedDimFilter = $event">
+      </ym-dim-filter>
+      <hr />
+    </ng-container>
+  </div>
+  <div class="row" *ngIf="defaultMetrics.length > 0 || availableMetrics.length > 0">
+    <ym-metric-filter [defaultMetrics]="defaultMetrics" [availableMetrics]="availableMetrics"
+      (metricFilterChanged)="selectedMetricFilter = $event"></ym-metric-filter>
+    <hr />
+  </div>
+  <div class="row" *ngIf="groupByDims.length > 0">
+    <ym-group-by [dimensions]="groupByDims" (grpByChanged)="selectedGrpBy = $event"></ym-group-by>
+  </div>
+  <p-footer>
+    <button pButton type="button" (click)="onApplyFilterClicked()" icon="pi pi-angle-right" label="Apply"
+      iconPos="right" class="ui-button-rounded ui-button-success"></button>
+    <button pButton type="button" (click)="onResetFilterClicked()" icon="pi pi-refresh" label="Reset" iconPos="right"
+      class="ui-button-rounded ui-button-reset ui-button-secondary btn-reset"></button>
+  </p-footer>
+</p-panel>

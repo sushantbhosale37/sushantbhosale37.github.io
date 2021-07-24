@@ -1,0 +1,232 @@
+<div id="cpr-component">
+  <p class="page-title">User Master</p>
+
+  <button
+    pButton
+    type="submit"
+    icon="fas fa-pencil-alt"
+    label="New User"
+    iconPos="right"
+    class="ui-button-rounded ui-button-success edit-role-button"
+    style="float: right; margin-bottom: 1%;"
+    (click)="NewUser()"
+  ></button>
+
+  <div
+    class="p-col-12 mt-1 order-table"
+    style="display: inline-block; width: 100%;">
+    <p-treeTable
+      #ttFlat
+      [value]="flatTableData"
+      [columns]="flatTableJson['selectedColumns']"
+      [paginator]="true"
+      [rows]="flatTableJson['page_size']"
+      [first]="flatTableJson['page']"
+      [totalRecords]="flatTableJson['totalRecords']"
+      [rowsPerPageOptions]="[10, 20, 50, 100]"
+      [lazy]="flatTableJson['lazy']"
+      [loading]="flatTableJson['loading']"
+      [sortMode]="flatTableJson['sortMode']"
+      [resizableColumns]="flatTableJson['resizableColumns']"
+      [columnResizeMode]="flatTableJson['columnResizeMode']"
+      [reorderableColumns]="flatTableJson['reorderableColumns']"
+      [frozenColumns]="flatTableJson['frozenCols']"
+      [frozenWidth]="flatTableJson['frozenWidth']"
+      [scrollable]="flatTableJson['scrollable']"
+      [scrollHeight]="flatTableJson['scrollHeight']"
+      [selectionMode]="flatTableJson['selectionMode']"
+      [(selection)]="flatTableJson['selectedColsModal']"
+      [dataKey]="flatTableJson['selectionDataKey']"
+      [metaKeySelection]="flatTableJson['metaKeySelection']"
+      [style]="{ width: '100%' }"
+    >
+      <!-- ----------------- Global Search and columns Show/Hide ----------------- -->
+
+      <ng-template pTemplate="caption">
+        <div
+          class="mb-1"
+          *ngIf="flatTableJson['showHideCols']"
+          style="text-align: left; float: left; display: inline-block;"
+        >
+          <p-multiSelect
+            [options]="flatTableJson['columns']"
+            [(ngModel)]="flatTableJson['selectedColumns']"
+            optionLabel="displayName"
+            maxSelectedLabels="1"
+            selectedItemsLabel="{0} columns selected"
+            [style]="{ minWidth: '200px' }"
+            defaultLabel="Choose Columns"
+          ></p-multiSelect>
+        </div>
+       
+      </ng-template>
+
+      <!-- ------------------------- For frozen columns -------------------------- -->
+
+      <ng-template pTemplate="colgroup" let-columns>
+        <colgroup>
+          <col
+            *ngFor="let col of columns"
+            [ngStyle]="{ width: col['width'] + 'px' }"
+          />
+        </colgroup>
+      </ng-template>
+
+      <!-- ------------------------------- Header -------------------------------- -->
+
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th
+            *ngFor="let col of columns; let i = index"
+            [ttSortableColumn]="col.field"
+            ttResizableColumn
+            ttReorderableColumn
+            [ttSortableColumnDisabled]="!col['options']['colSort']"
+            [ttResizableColumnDisabled]="!col['options']['resizable']"
+            [ttReorderableColumnDisabled]="!col['options']['movable']"
+          >
+            {{ col.displayName }}
+            <p-treeTableSortIcon
+              [field]="col.field"
+              *ngIf="col['options']['colSort']"
+            >
+            </p-treeTableSortIcon>
+          </th>
+        </tr>
+
+        <tr *ngIf="flatTableJson['columnSearch']">          
+            <ng-container *ngFor="let col of columns">
+              <th *ngIf="isHiddenColumn(col)">
+                
+                <input
+                  pInputText
+                  type="text"
+                  (input)="
+                  ttFlat.filter(
+                      $event.target.value,
+                      col.field,
+                      col.filterMatchMode
+                    )
+                  "
+                  [style.visibility]="
+                    col['options']['colSearch'] ? 'visible' : 'hidden'
+                  "
+                  style="width: 100%;border-radius: 5px;
+
+                  border: 1px solid #c8c8c8;
+                  padding: 1.3px;"                />
+              </th>
+            </ng-container>
+          <!-- </ng-container> -->
+        </tr>
+      </ng-template>
+
+      <!-- -------------------------------- Body --------------------------------- -->
+
+      <ng-template
+        pTemplate="body"
+        let-rowNode
+        let-rowData="rowData"
+        let-columns="columns"
+      >
+        <tr>
+          <td
+            *ngFor="let col of columns; let i = index"
+            ttEditableColumn
+            [title]="
+              rowData[col.field] | formatNum: col.format:col.formatConfig
+            "
+          >
+            <p-treeTableCellEditor *ngIf="col['options']['editable']">
+              <ng-template pTemplate="input">
+                <input
+                  ymInput
+                  pInputText
+                  type="text"
+                  [(ngModel)]="rowData[col.field]"
+                  [ngStyle]="{ width: i == 0 ? '90%' : '100%' }"
+                />
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{
+                  rowData[col.field] | formatNum: col.format:col.formatConfig
+                }}
+              </ng-template>
+            </p-treeTableCellEditor>
+            <span *ngIf="!col['options']['editable']">
+              <span *ngIf="col.field != 'delete' && col.field != 'edit'">
+                {{
+                  rowData[col.field] | formatNum: col.format:col.formatConfig
+                }}
+              </span>
+              <span
+                *ngIf="col.field == 'delete'"
+                class="link-style-icon"
+                (click)="deleteUser(rowData)"
+              >
+                <i class="far fa-trash-alt"></i>
+              </span>
+
+              <span
+                *ngIf="col.field == 'edit'"
+                class="link-style-icon"
+                (click)="editUser(rowData)"
+              >
+                <i class="fas fa-pencil-alt"></i>
+              </span>
+            </span>
+
+          </td>
+        </tr>
+      </ng-template>
+
+      <!-- ----------------------------- Frozen Body ----------------------------- -->
+
+      <ng-template
+      pTemplate="frozenbody"
+      let-rowNode
+      let-rowData="rowData"
+      let-columns="columns"
+    >
+      <tr style="background: #f4f4f4">
+        <td
+          *ngFor="let col of columns; let i = index"
+          [title]="
+            rowData[col.field] | formatNum: col.format:col.formatConfig
+          "
+        >
+          <p-treeTableToggler
+            *ngIf="i == 0"
+            [rowNode]="rowNode"
+          ></p-treeTableToggler>
+
+          <span
+          >
+            {{
+              rowData[col.field]
+                ? (rowData[col.field]
+                  | formatNum: col.format:col.formatConfig)
+                : ''
+            }}
+          </span>
+        </td>
+      </tr>
+    </ng-template>
+
+      <ng-template pTemplate="paginatorleft" let-state>
+        Showing {{ state.page * state.rows + 1 }} to
+        {{
+          state.rows * (state.page + 1) > state.totalRecords
+            ? state.totalRecords
+            : state.rows * (state.page + 1)
+        }}
+        of {{ state.totalRecords }} Records
+      </ng-template>
+
+      <!-- ------------------- Message to show for empty Data -------------------- -->
+
+    </p-treeTable>
+  </div>
+  <!-- ------------------------- Table 2 Component End ------------------------- -->
+  <p-confirmDialog [style]="{ width: '50vw' }"></p-confirmDialog>
+</div>

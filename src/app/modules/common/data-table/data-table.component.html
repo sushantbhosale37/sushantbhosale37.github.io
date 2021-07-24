@@ -1,0 +1,171 @@
+<div class="cards-container">
+  <p-treeTable #ttFlat [value]="tableData['flatTableData']" [columns]="tableData['flatTableJson']['selectedColumns']"
+    [paginator]="true" [rows]="tableData['flatTableJson']['page_size']" [first]="tableData['flatTableJson']['page']"
+    [totalRecords]="tableData['flatTableJson']['totalRecords']" [rowsPerPageOptions]="[10, 20, 50, 100]"
+    [lazy]="tableData['flatTableJson']['lazy']" [loading]="tableData['flatTableJson']['loading']"
+    [sortMode]="tableData['flatTableJson']['sortMode']"
+    [resizableColumns]="tableData['flatTableJson']['resizableColumns']"
+    [columnResizeMode]="tableData['flatTableJson']['columnResizeMode']"
+    [reorderableColumns]="tableData['flatTableJson']['reorderableColumns']"
+    [frozenColumns]="tableData['flatTableJson']['frozenCols']" [frozenWidth]="tableData['flatTableJson']['frozenWidth']"
+    [scrollable]="tableData['flatTableJson']['scrollable']" [scrollHeight]="tableData['flatTableJson']['scrollHeight']"
+    [selectionMode]="tableData['flatTableJson']['selectionMode']"
+    [(selection)]="tableData['flatTableJson']['selectedColsModal']"
+    [dataKey]="tableData['flatTableJson']['selectionDataKey']"
+    [metaKeySelection]="tableData['flatTableJson']['metaKeySelection']"
+    [globalFilterFields]="tableData['flatTableJson']['globalFilterFields']" (onColResize)="onColumnResize()"
+    [style]="{ width: '100%' }">
+    <!-- ----------------- Global Search and columns Show/Hide ----------------- -->
+
+    <ng-template pTemplate="caption">
+      <div class="mb-1" *ngIf="tableData['flatTableJson']['showHideCols']"
+        style="text-align: left; float: left; display: inline-block;">
+        <p-multiSelect [options]="tableData['flatTableJson']['columns']"
+          [(ngModel)]="tableData['flatTableJson']['selectedColumns']" optionLabel="displayName" maxSelectedLabels="1"
+          selectedItemsLabel="{0} columns selected" [style]="{ minWidth: '150px' }" defaultLabel="Choose Columns">
+        </p-multiSelect>
+      </div>
+      <!-- <div class ="mt-2 note"><span>* GTE - Greater than Equal to,  LTE -  Less than Equal to </span></div> -->
+      <div *ngIf="tableData['flatTableJson']['export']" style="text-align: left; float: right; display: inline-block;"
+        class="ml-3 mt-2">
+        <div data-html2canvas-ignore class="dropdown">
+          <span class="dropdown-toggle" style="cursor: pointer" id="dropdownMenu1" data-toggle="dropdown"
+            aria-haspopup="true" title="Export to Excel/CSV/JSON" aria-expanded="true">
+            <i title="Export to Excel/CSV/JSON" class="fas fa-download share-icon" id="dropdownMenu1"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+              <span class="caret"></span> </i>&nbsp;&nbsp;Export</span>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" (click)="exportTable('Excel')">
+              Excel
+            </a>
+            <a class="dropdown-item" (click)="exportTable('CSV')">
+              CSV
+            </a>
+            <!-- <a
+                      class="dropdown-item"
+                      href="#"
+                      (click)="exportTable('flat', 'JSON')"
+                    >
+                      JSON
+                    </a> -->
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="tableData['flatTableJson']['overallSearch']"
+        style="text-align: right; float: right; display: inline-block;">
+        <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+        <input class="search" ymInput pInputText type="text" size="30" placeholder="Search All" style="width: 250px"
+          [(ngModel)]="searchvalue" (input)="ttFlat.filterGlobal($event.target.value, 'contains')" />
+        <span title="Clear Search" *ngIf="searchvalue" style="right:20px;position:relative;cursor:pointer;"
+          (click)="searchvalue='';ttFlat.filterGlobal('', 'contains')"><i class="pi pi-times"></i>
+        </span>
+      </div>
+      <!-- <div *ngIf="tableData['flatTableJson']['overallSearch']"
+                style="text-align: right; float: right; display: inline-block;">
+                <i class="fas fa-info-circle info-toottip" title="Search function works for dimensions only."></i>
+              </div> -->
+    </ng-template>
+
+    <!-- ------------------------- For frozen columns -------------------------- -->
+
+    <ng-template pTemplate="colgroup" let-columns>
+      <colgroup>
+        <col *ngFor="let col of columns" [ngStyle]="{ width: col['width'] + 'px' }" />
+      </colgroup>
+    </ng-template>
+
+    <!-- ------------------------------- Header -------------------------------- -->
+
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th class="table-head" *ngFor="let col of columns; let i = index" [ttSortableColumn]="col.field"
+          ttResizableColumn ttReorderableColumn [ttSortableColumnDisabled]="!col['options']['colSort']"
+          [ttResizableColumnDisabled]="!col['options']['resizable']"
+          [ttReorderableColumnDisabled]="!col['options']['movable']">
+          {{ col.displayName }}
+          <p-treeTableSortIcon [field]="col.field" *ngIf="col['options']['colSort']">
+          </p-treeTableSortIcon>
+        </th>
+      </tr>
+      <tr *ngIf="tableData['flatTableJson']['columnSearch']">
+        <th *ngFor="let col of columns">
+          <input [ngStyle]="{ width: col['width'] - 23 + 'px' }"
+            *ngIf="col['options']['colSearch'] && (col.field == 'time_key' || col.field == 'accounting_key')" pInputText
+            type="text" (input)="ttFlat.filter(changeDateTomoment($event.target.value), col.field, 'contains')">
+
+          <input [ngStyle]="{ width: col['width'] - 23 + 'px' }"
+            *ngIf="col['options']['colSearch'] && col.field != 'time_key' && col.field != 'accounting_key'" pInputText
+            type="text" (input)="ttFlat.filter($event.target.value, col.field, 'contains')">
+
+        </th>
+      </tr>
+    </ng-template>
+
+    <!-- -------------------------------- Body --------------------------------- -->
+
+    <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
+      <tr>
+        <td *ngFor="let col of columns; let i = index" ttEditableColumn>
+          <p-treeTableCellEditor *ngIf="col['options']['editable']">
+            <ng-template pTemplate="input">
+              <input ymInput pInputText type="text" [(ngModel)]="rowData[col.field]"
+                [ngStyle]="{ width: i == 0 ? '90%' : '100%' }" />
+            </ng-template>
+            <ng-template pTemplate="output">
+              {{
+                        rowData[col.field] | formatNum: col.format:col.formatConfig
+                      }}
+            </ng-template>
+          </p-treeTableCellEditor>
+          <span [title]="rowData[col.field] | formatNum: col.format:col.formatConfig"
+            *ngIf="!col['options']['editable']">
+            {{
+                        rowData[col.field] | formatNum: col.format:col.formatConfig
+                      }}
+          </span>
+        </td>
+      </tr>
+    </ng-template>
+
+    <!-- ----------------------------- Frozen Body ----------------------------- -->
+
+    <ng-template *ngIf="tableData['flatTableJson']['frozenCols'] != undefined" pTemplate="frozenbody" let-rowNode
+      let-rowData="rowData" let-columns="columns">
+      <tr style="background: #f4f4f4">
+        <td *ngFor="let col of columns; let i = index" [title]="
+                  rowData[col.field] | formatNum: col.format:col.formatConfig
+                ">
+          <!-- <p-treeTableToggler *ngIf="i == 0" [rowNode]="rowNode"></p-treeTableToggler> -->
+
+          <span>
+            {{
+                    rowData[col.field]
+                      ? (rowData[col.field]
+                        | formatNum: col.format:col.formatConfig)
+                      : ''
+                  }}
+          </span>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="paginatorleft" let-state>
+      <span *ngIf="state.totalRecords >0"> Showing {{ state.page * state.rows + 1 }} to {{
+                  state.rows * (state.page + 1) > state.totalRecords
+                    ? state.totalRecords
+                    : state.rows * (state.page + 1)
+                }} of {{ state.totalRecords }} Records</span>
+    </ng-template>
+
+    <!-- ------------------- Message to show for empty Data -------------------- -->
+
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td [attr.colspan]="tableData['flatTableJson']['columns'].length">
+          No data found.
+        </td>
+      </tr>
+    </ng-template>
+  </p-treeTable>
+</div>

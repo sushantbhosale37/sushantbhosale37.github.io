@@ -1,0 +1,59 @@
+<div class="ui-g">
+  <div class="ui-g-12 ui-g-nopad">
+    <div
+      class="ui-g-4 ui-md-4 ui-sm-12 ui-g-nopad"
+      *ngFor="let metric of defaultMetrics"
+    >
+      <div class="ui-g-12 ui-g-nopad">
+        <span class="ui-g-4 metric-title">{{ metric.label }}</span>
+        <div class="ui-g-6  ui-g-nopad">
+          <div class="ui-g-6 ui-g-nopad">
+            <span class="ui-g-12 ui-g-nopad">Min: </span>
+            <p-spinner
+              class="ui-g-12 ui-g-nopad"
+              [(ngModel)]="selectedMetricRange[metric['key']][0]"
+              [min]="0"
+              [step]="metric['config_json']['step']"
+              [size]="2"
+              (onBlur)="onChange()"
+            ></p-spinner>
+          </div>
+          <div class="ui-g-6 ui-g-nopad">
+            <span class="ui-g-12 ui-g-nopad">Max: </span>
+            <p-spinner
+              class="ui-g-12 ui-g-nopad"
+              [(ngModel)]="selectedMetricRange[metric['key']][1]"
+              [min]="0"
+              [step]="metric['config_json']['step']"
+              [size]="2"
+              (onBlur)="onChange()"
+            ></p-spinner>
+          </div>
+        </div>
+        <div class="ui-g-2 ui-g-nopad">
+          <i (click)="remove(metric)" class="fas fa-times"></i>
+        </div>
+      </div>
+    </div>
+    <div
+      class="ui-g-4 ui-md-4 ui-sm-12 add-more"
+      *ngIf="availableMetrics.length > 0"
+    >
+      <div class="ui-g-12 ui-g-nopad">
+        <span class="ui-g-4 ui-float-label">Add more...</span>
+        <div class="ui-g-8 ui-g-nopad">
+          <p-dropdown
+            [options]="availableMetrics"
+            [(ngModel)]="selectedMetricToAdd"
+            placeholder="Select Metric"
+            optionLabel="label"
+            dataKey="key"
+            [style]="{ 'min-width': '200px' }"
+            (onChange)="merticAdded()"
+            #metricsDropdown
+          ></p-dropdown>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,152 @@
+<div class="ui-fluid">
+  <form [formGroup]="formNewRowModel" (ngSubmit)="submitHandler()">
+    <div class="ui-g-12">
+      <div class="ui-g-1 font-weight-bold">
+        <label for="supplierCode"> Supplier Code :</label>
+      </div>
+      <div class="ui-g-3">
+        <input type="text" [(ngModel)]="supplierCode" id="supplierCode" name="supplierCode" pInputText placeholder="Supplier Code"
+          formControlName="supplierCode" [ngClass]="{
+            'is-invalid':
+              f['supplierCode'].invalid && (f['supplierCode'].dirty || f['supplierCode'].touched)
+          }" />
+        <div *ngIf="
+            f['supplierCode'].invalid && (f['supplierCode'].dirty || f['supplierCode'].touched)
+          " class="invalid-feedback">
+          <div *ngIf="f['supplierCode'].errors.required">
+            Supplier Code is required
+          </div>
+        </div>
+      </div>
+
+      <div class="ui-g-1 font-weight-bold">
+        <label for="supplierName"> Supplier Name :</label>
+      </div>
+      <div class="ui-g-3">
+        <input type="text" [(ngModel)]="supplierName" id="supplierName" name="supplierName" pInputText placeholder="Supplier Name"
+          formControlName="supplierName" [ngClass]="{
+            'is-invalid':
+              f['supplierName'].invalid && (f['supplierName'].dirty || f['supplierName'].touched)
+          }" />
+        <div *ngIf="
+            f['supplierName'].invalid && (f['supplierName'].dirty || f['supplierName'].touched)
+          " class="invalid-feedback">
+          <div *ngIf="f['supplierName'].errors.required">
+            Supplier Name is required
+          </div>
+        </div>
+      </div>
+
+      <div class="ui-g-1 font-weight-bold">
+        <label for="supGstPAN"> Supplier GST/PAN :</label>
+      </div>
+      <div class="ui-g-3">
+        <input type="text" [(ngModel)]="supGstPAN" id="supGstPAN" name="supGstPAN" pInputText placeholder="Supplier GST/PAN"
+          formControlName="supGstPAN" [ngClass]="{
+            'is-invalid':
+              f['supGstPAN'].invalid && (f['supGstPAN'].dirty || f['supGstPAN'].touched)
+          }" />
+        <div *ngIf="
+            f['supGstPAN'].invalid && (f['supGstPAN'].dirty || f['supGstPAN'].touched)
+          " class="invalid-feedback">
+          <div *ngIf="f['supGstPAN'].errors.required">
+            Supplier GST/PAN is required
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ui-g-12">
+      <div class="ui-g-1 font-weight-bold">
+        <label for="supMobile"> Mobile No. :</label>
+      </div>
+      <div class="ui-g-3">
+        <input type="text" onkeyup="$(this).val($(this).val().replace(/[^0-9]/g, ''));" [(ngModel)]="supMobile" id="supMobile"
+          name="supMobile" pInputText placeholder="Mobile No" formControlName="supMobile" [ngClass]="{
+            'is-invalid':
+              f['supMobile'].invalid && (f['supMobile'].dirty || f['supMobile'].touched)
+          }" />
+        <div *ngIf="
+            f['supMobile'].invalid && (f['supMobile'].dirty || f['supMobile'].touched)
+          " class="invalid-feedback">
+          <div *ngIf="f['supMobile'].errors.required">
+            Mobile is required
+          </div>
+        </div>
+      </div>
+
+      <div class="ui-g-1 font-weight-bold">
+        <label for="supPhone"> Phone No :</label>
+      </div>
+      <div class="ui-g-3">
+        <input type="text" onkeyup="$(this).val($(this).val().replace(/[^0-9]/g, ''));" [(ngModel)]="supPhone"
+          id="supPhone" name="supPhone" pInputText placeholder="Phone No" formControlName="supPhone" />
+      </div>
+
+      <div class="ui-g-1 font-weight-bold">
+        <label for="supAddress">Address :</label>
+      </div>
+      <div class="ui-g-3 ui-inputgroup">
+        <textarea type="text" id="supAddress" name="supAddress" [(ngModel)]="supAddress" pInputText placeholder="Address"
+          formControlName="supAddress" style="height: 80px;"></textarea>
+      </div>
+    </div>
+
+    <div class="ui-g-12">
+      <div class="ui-g-1 font-weight-bold">
+        <label for="supEMail"> Email :</label>
+      </div>
+      <div class="ui-g-3">
+        <input type="text" [(ngModel)]="supEMail" id="supEMail" name="supEMail" pInputText placeholder="Supplier Email" formControlName="supEMail" />
+      </div>
+
+      <div class="ui-g-1 font-weight-bold">
+        <label for="supRemainingBalance"> Remaining Bal :</label>
+      </div>
+      <div class="ui-g-3">
+        <input type="text" [(ngModel)]="supRemainingBalance" id="supRemainingBalance" name="supRemainingBalance" 
+        pInputText placeholder="Supplier Remaining Bal" formControlName="supRemainingBalance" />
+      </div>
+
+      <div class="ui-g-1 font-weight-bold">
+        <label for="supRemaingBalanceDate">Remaining Bal Date :</label>
+      </div>
+      <div class="ui-g-3">
+        <p-calendar [(ngModel)]="supRemaingBalanceDate" id="supRemaingBalanceDate" name="supRemaingBalanceDate" showButtonBar="true"
+          [(ngModel)]="supRemaingBalanceDate" [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
+          [maxDate]="maxDate" pInputText placeholder="Remaining Bal Date" formControlName="supRemaingBalanceDate">
+        </p-calendar>
+      </div>     
+    </div>
+
+    <div class="ui-g-12">
+     <div class="ui-g-1 font-weight-bold">
+       <label for="suppStatus"> Status :</label>
+     </div>
+     <div class="ui-g-3">
+       <p-dropdown [options]="SuppStatusOptions" [(ngModel)]="selectedSuppStatus" [filter]="true" filterBy="label"
+         formControlName="selectedSuppStatus" name="selectedSuppStatus" optionLabel="label" dataKey="key"
+         placeholder="Supplier Status" [ngClass]="{
+           'is-invalid':
+             f['selectedSuppStatus'].invalid && (f['selectedSuppStatus'].dirty || f['selectedSuppStatus'].touched)
+         }"></p-dropdown>
+       <div *ngIf="f['selectedSuppStatus'].invalid && (f['selectedSuppStatus'].dirty || f['selectedSuppStatus'].touched)" 
+       class="invalid-feedback">
+         <div *ngIf="f['selectedSuppStatus'].errors.required">
+           Status is required
+         </div>
+       </div>
+     </div>
+   </div>
+ 
+    <div class="new-rio-footer">
+      <button pButton type="submit" label="Save" icon="fas fa-user-edit" class="ui-button-success"
+        [disabled]="!formNewRowModel.valid"></button>
+
+      <button pButton type="button" (click)="goBack()" label="Cancel" icon="far fa-times-circle"
+        class="ml-2 ui-button-warning"></button>
+    </div>
+
+  </form>
+</div>
+<p-confirmDialog appendTo="body" [style]="{ width: '50vw' }"></p-confirmDialog>

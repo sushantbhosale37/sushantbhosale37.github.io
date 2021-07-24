@@ -1,0 +1,55 @@
+<div class="ui-fluid">
+  <form [formGroup]="formNewRioModel" (ngSubmit)="submitHandler()">
+
+    <div class="ui-g-12">
+      <div class="ui-g-4 font-weight-bold">
+        <label for="cakeShape"> Cake Shape Name :</label>
+      </div>
+      <div class="ui-g-6">
+        <input type="text" [(ngModel)]="cakeShape" id="cakeShape" name="cakeShape" pInputText placeholder="Cake Shape Name"
+          formControlName="cakeShape" [ngClass]="{
+            'is-invalid':
+              f['cakeShape'].invalid && (f['cakeShape'].dirty || f['cakeShape'].touched)
+          }">
+        <div *ngIf="
+            f['cakeShape'].invalid && (f['cakeShape'].dirty || f['cakeShape'].touched)
+          " class="invalid-feedback">
+          <div *ngIf="f['cakeShape'].errors.required">
+            Cake Shape Name is required
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ui-g-12">
+      <div class="ui-g-4 font-weight-bold">
+        <label for="cakeShapeStatus"> Cake Shape Status :</label>
+      </div>
+      <div class="ui-g-6">
+        <p-dropdown [options]="CakeShapeStatusOptions" [(ngModel)]="selectedCakeShapeStatus" [filter]="true" filterBy="label"
+          formControlName="selectedCakeShapeStatus" name="selectedCakeShapeStatus" optionLabel="label" dataKey="key"
+          placeholder="Cake Shape Status" [ngClass]="{
+            'is-invalid':
+              f['selectedCakeShapeStatus'].invalid && (f['selectedCakeShapeStatus'].dirty || f['selectedCakeShapeStatus'].touched)
+          }"></p-dropdown>
+        <div *ngIf="
+            f['selectedCakeShapeStatus'].invalid && (f['selectedCakeShapeStatus'].dirty || f['selectedCakeShapeStatus'].touched)
+          " class="invalid-feedback">
+          <div *ngIf="f['selectedCakeShapeStatus'].errors.required">
+            Cake Shape Status is required
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="new-rio-footer">
+      <button pButton type="submit" label="Save" icon="fas fa-user-edit" class="ui-button-success"
+        [disabled]="!formNewRioModel.valid"></button>
+
+      <button pButton type="button" (click)="goBack()" label="Cancel" icon="far fa-times-circle"
+        class="ml-2 ui-button-warning"></button>
+    </div>
+
+
+  </form>
+</div>

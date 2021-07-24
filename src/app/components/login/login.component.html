@@ -1,0 +1,105 @@
+<div class="login-page">
+  <div class="row">
+    <div class="ui-g-11" style="color: #ffc107; font-size: 18px; font-weight: bold;">
+      <marquee behavior="alternate">Welcome In Cake Art</marquee>
+    </div>
+    <div class="ui-g-1">
+      <div style="color: white; margin-top: 3%; cursor: pointer;" (click)="getHelpPopup()">
+        <span><i class="fas fa-info-circle"></i>&nbsp;&nbsp;Help</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="login-card">
+    <p-card header="Admin Login" class="center" styleClass="ui-card-shadow">
+      <p-header>
+        <img class="logo-img" src="assets/images/login-icon1.png" style="width: 150px;" />
+      </p-header>
+      <hr />
+      <form (ngSubmit)="onLogin()">
+        <div>
+          <div class="ui-g ui-fluid">
+            <div class="ui-g-12">
+              <span class="bold">Email</span>
+            </div>
+            <div class="ui-g-12">
+              <div class="ui-inputgroup" *ngIf="!newUser">
+                <span class="ui-inputgroup-addon">
+                  <i class="fa fa-user"></i></span>
+                <input type="text" name="email" class="ui-inputtext" pInputText [(ngModel)]="model.email"
+                  placeholder="Username" />
+              </div>
+              <div class="font-weight-bold" *ngIf="newUser">
+                {{ userEmail }}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g ui-fluid">
+            <div class="ui-g-12">
+              <span class="bold">Password</span>
+            </div>
+            <div class="ui-g-12">
+              <div class="ui-inputgroup">
+                <span class="ui-inputgroup-addon"><i class="fas fa-key"></i></span>
+                <input pPassword [showPassword]="showPassword['new']" type="password" name="password"
+                  class="ui-inputtext" placeholder="Password" [feedback]="false" [(ngModel)]="model.password" />
+                <span class="ui-inputgroup-addon">
+                  <i [ngClass]="
+                      showPassword['new'] ? 'far fa-eye' : 'far fa-eye-slash'
+                    " (click)="togglePassword('new')"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="ui-g ui-fluid" *ngIf="newUser">
+            <div class="ui-g-12">
+              <span class="bold">Confirm Password</span>
+            </div>
+            <div class="ui-g-12">
+              <div class="ui-inputgroup">
+                <span class="ui-inputgroup-addon"><i class="fas fa-key"></i></span>
+                <input pPassword [showPassword]="showPassword['confirm']" type="password" name="conformPassword"
+                  placeholder="Confirm Password" [feedback]="false" [(ngModel)]="model.confirmPassword" />
+                <span class="ui-inputgroup-addon">
+                  <i [ngClass]="
+                      showPassword['confirm']
+                        ? 'far fa-eye'
+                        : 'far fa-eye-slash'
+                    " (click)="togglePassword('confirm')"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- <div class="ui-g ui-fluid" *ngIf="!newUser">
+            <div class="ui-g-12">
+              <p-checkbox [(ngModel)]="model.rememberMe" binary="true" [ngModelOptions]="{ standalone: true }">
+              </p-checkbox>
+              <span class="bold">
+                Stay Signed In
+              </span>
+            </div>
+          </div> -->
+
+          <!-- <div class="ui-g ui-fluid" *ngIf="!newUser">
+            <div class="ui-g-12">
+              <a class="forgot-password" href="javascript:void(0)" (click)="forgotPassword()">
+                Forgot password?
+              </a>
+            </div>
+          </div> -->
+
+          <button  type="submit" pButton name="submit" label="Sign in" icon="pi pi-check"
+            style="margin-right: 0.25em;" class="ui-button-success"></button>
+        </div>
+      </form>
+    </p-card>
+  </div>
+  <div p-col-12 style="width: 150px; height: 70px; margin-top: -70px; margin-left: 50px;">
+    <a href="#" target="_blank">
+      <img src="assets/images/cp-logo.png" alt="YuktaMedia" height="25px"
+        style="margin-top: 30px; font-family: Source Sans Pro; font-size: 30px;" />
+    </a>
+  </div>
+</div>

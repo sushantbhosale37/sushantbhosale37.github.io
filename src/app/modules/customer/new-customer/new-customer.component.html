@@ -1,0 +1,283 @@
+<div class="ui-fluid">
+  <form [formGroup]="formNewRioModel" (ngSubmit)="submitHandler()">
+    <div class="ui-g-12">
+      <div class="ui-g-1 font-weight-bold">
+        <label for="CustName"> Customer Name :</label>
+      </div>
+      <div class="ui-g-3">
+        <input type="text" [(ngModel)]="CustName" id="CustName" name="CustName" pInputText placeholder="Customer Name"
+          formControlName="CustName" [ngClass]="{
+            'is-invalid':
+              f['CustName'].invalid && (f['CustName'].dirty || f['CustName'].touched)
+          }" />
+        <div *ngIf="
+            f['CustName'].invalid && (f['CustName'].dirty || f['CustName'].touched)
+          " class="invalid-feedback">
+          <div *ngIf="f['CustName'].errors.required">
+            Customer Name is required
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="ui-g-1 font-weight-bold">
+        <label for="custBdate">Birth Date</label>
+      </div>
+      <div class="ui-g-3" style="margin-left:0">
+        <p-calendar [(ngModel)]="custBdate" id="custBdate" name="custBdate" [(ngModel)]="custBdate" pInputText
+          placeholder="Birth Date" [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
+          [maxDate]="maxDate" formControlName="custBdate"></p-calendar>
+      </div>
+
+      <div class="ui-g-1 font-weight-bold">
+        <label for="anniversaryDate">Anniversary Date</label>
+      </div>
+      <div class="ui-g-3" style="margin-left:0">
+        <p-calendar [(ngModel)]="anniversaryDate" id="anniversaryDate" name="anniversaryDate" showButtonBar="true"
+          [(ngModel)]="anniversaryDate" [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
+          [maxDate]="maxDate" pInputText placeholder="Anniversary Date" formControlName="anniversaryDate">
+        </p-calendar>
+      </div>
+    </div>
+
+
+    <div class="ui-g-12">
+      <div class="ui-g-1 font-weight-bold">
+        <label for="mobile"> Mobile No. :</label>
+      </div>
+      <div class="ui-g-3">
+        <input type="text" onkeyup="$(this).val($(this).val().replace(/[^0-9]/g, ''));" [(ngModel)]="mobile" id="mobile"
+          name="mobile" pInputText placeholder="mobile No" formControlName="mobile" [ngClass]="{
+            'is-invalid':
+              f['mobile'].invalid && (f['mobile'].dirty || f['mobile'].touched)
+          }" />
+        <div *ngIf="
+            f['mobile'].invalid && (f['mobile'].dirty || f['mobile'].touched)
+          " class="invalid-feedback">
+          <div *ngIf="f['mobile'].errors.required">
+            Mobile is required
+          </div>
+        </div>
+      </div>
+
+      <div class="ui-g-1 font-weight-bold">
+        <label for="address">Address :</label>
+      </div>
+      <div class="ui-g-4 ui-inputgroup">
+        <textarea type="text" id="address" name="address" [(ngModel)]="address" pInputText placeholder="Address"
+          formControlName="address" style="height: 80px;"></textarea>
+      </div>
+
+      <div class="ui-g-1 font-weight-bold">
+        <label for="pinCode"> Pin Code :</label>
+      </div>
+      <div class="ui-g-2">
+        <input type="text" onkeyup="$(this).val($(this).val().replace(/[^0-9]/g, ''));" [(ngModel)]="pinCode"
+          id="pinCode" name="pinCode" pInputText placeholder="Pin Code" formControlName="pinCode" />
+      </div>
+
+    </div>
+
+    <div class="ui-g-12">
+
+      <div class="ui-g-1 font-weight-bold">
+        <label for="selectedCountry"> Country :</label>
+      </div>
+      <div class="ui-g-2">
+        <p-dropdown [options]="CountryOptions" (onChange)="countryChange()" [(ngModel)]="selectedCountry"
+          formControlName="selectedCountry" name="selectedCountry" optionLabel="label" dataKey="key" [filter]="true"
+          filterBy="label" placeholder="Select Country" [ngClass]="{
+            'is-invalid':
+              f['selectedCountry'].invalid && (f['selectedCountry'].dirty || f['selectedCountry'].touched)
+          }"></p-dropdown>
+        <div *ngIf="
+            f['selectedCountry'].invalid && (f['selectedCountry'].dirty || f['selectedCountry'].touched)
+          " class="invalid-feedback">
+          <div *ngIf="f['selectedCountry'].errors.required">
+            Country is required
+          </div>
+        </div>
+      </div>
+
+      <div class="ui-g-1 font-weight-bold">
+        <label for="selectedState"> State :</label>
+      </div>
+      <div class="ui-g-2">
+        <p-dropdown [options]="StateOptions" (onChange)="stateChange()" [(ngModel)]="selectedState"
+          formControlName="selectedState" name="selectedState" optionLabel="label" dataKey="key" [filter]="true"
+          filterBy="label" placeholder="Select State" [ngClass]="{
+            'is-invalid':
+              f['selectedState'].invalid && (f['selectedState'].dirty || f['selectedState'].touched)
+          }"></p-dropdown>
+        <div *ngIf="
+            f['selectedState'].invalid && (f['selectedState'].dirty || f['selectedState'].touched)
+          " class="invalid-feedback">
+          <div *ngIf="f['selectedState'].errors.required">
+            State is required
+          </div>
+        </div>
+      </div>
+
+      <div class="ui-g-1 font-weight-bold">
+        <label for="selectedDistrict"> District :</label>
+      </div>
+      <div class="ui-g-2">
+        <p-dropdown [options]="DistrictOptions" (onChange)="districtChange()" [(ngModel)]="selectedDistrict"
+          formControlName="selectedDistrict" name="selectedDistrict" optionLabel="label" dataKey="key" [filter]="true"
+          filterBy="label" placeholder="Select District" [ngClass]="{
+            'is-invalid':
+              f['selectedDistrict'].invalid && (f['selectedDistrict'].dirty || f['selectedDistrict'].touched)
+          }"></p-dropdown>
+        <div *ngIf="
+            f['selectedDistrict'].invalid && (f['selectedDistrict'].dirty || f['selectedDistrict'].touched)
+          " class="invalid-feedback">
+          <div *ngIf="f['selectedDistrict'].errors.required">
+            District is required
+          </div>
+        </div>
+      </div>
+
+      <div class="ui-g-1 font-weight-bold">
+        <label for="selectedTaluka"> Taluka :</label>
+      </div>
+      <div class="ui-g-2">
+        <p-dropdown [options]="TalukaOptions" [(ngModel)]="selectedTaluka" formControlName="selectedTaluka"
+          name="selectedTaluka" optionLabel="label" dataKey="key" placeholder="Select Taluka" [filter]="true"
+          filterBy="label" [ngClass]="{
+            'is-invalid':
+              f['selectedTaluka'].invalid && (f['selectedTaluka'].dirty || f['selectedTaluka'].touched)
+          }"></p-dropdown>
+        <div *ngIf="
+            f['selectedTaluka'].invalid && (f['selectedTaluka'].dirty || f['selectedTaluka'].touched)
+          " class="invalid-feedback">
+          <div *ngIf="f['selectedTaluka'].errors.required">
+            Taluka is required
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ui-g-12" style="border: 1px solid gray;">
+      <div style="width:100%;display: inline-block;">
+        <button pButton type="button" icon="fas fa-pencil-alt" label="New Family Details" iconPos="right"
+          class="ui-button-rounded ui-button-success edit-role-button" style="float: right; margin-bottom: 1%;"
+          (click)="NewFamily()"></button>
+      </div>
+      <div class="fr-payment-table vast-table">
+        <p-treeTable #ttFlat [value]="flatTableData" [columns]="flatTableJson['selectedColumns']" [paginator]="false"
+          [rows]="flatTableJson['page_size']" [first]="flatTableJson['page']"
+          [totalRecords]="flatTableJson['totalRecords']" [rowsPerPageOptions]="[10, 20, 50, 100]"
+          [lazy]="flatTableJson['lazy']" [loading]="flatTableJson['loading']" [sortMode]="flatTableJson['sortMode']"
+          [resizableColumns]="flatTableJson['resizableColumns']" [columnResizeMode]="flatTableJson['columnResizeMode']"
+          [reorderableColumns]="flatTableJson['reorderableColumns']" [frozenColumns]="flatTableJson['frozenCols']"
+          [frozenWidth]="flatTableJson['frozenWidth']" [scrollable]="flatTableJson['scrollable']"
+          [scrollHeight]="flatTableJson['scrollHeight']" [selectionMode]="flatTableJson['selectionMode']"
+          [(selection)]="flatTableJson['selectedColsModal']" [dataKey]="flatTableJson['selectionDataKey']"
+          [metaKeySelection]="flatTableJson['metaKeySelection']" [style]="{ width: '100%' }">
+          <!-- ------------------------------- Header -------------------------------- -->
+
+          <ng-template pTemplate="header" let-columns>
+            <tr>
+              <th *ngFor="let col of columns; let i = index" [ttSortableColumn]="col.field" ttResizableColumn
+                ttReorderableColumn [ttSortableColumnDisabled]="!col['options']['colSort']"
+                [ttResizableColumnDisabled]="!col['options']['resizable']"
+                [ttReorderableColumnDisabled]="!col['options']['movable']">
+                {{ col.displayName }}
+
+                <p-treeTableSortIcon [field]="col.field" *ngIf="col['options']['colSort']"></p-treeTableSortIcon>
+              </th>
+            </tr>
+            <tr *ngIf="flatTableJson['columnSearch']">
+              <ng-container *ngFor="let col of columns">
+                <th *ngIf="isHiddenColumn(col)">
+                  <input ymInput pInputText type="text" [style.visibility]="
+                      col['options']['colSearch'] ? 'visible' : 'hidden'
+                    " (input)="
+                      tt.filter($event.target.value, col.field, col.filterMatchMode)
+                    " />
+                </th>
+              </ng-container>
+            </tr>
+          </ng-template>
+
+
+          <ng-template pTemplate="colgroup" let-columns>
+            <colgroup>
+              <col *ngFor="let col of columns" [ngStyle]="{ width: col['width'] + 'px' }" />
+            </colgroup>
+          </ng-template>
+
+          <!-- -------------------------------- Body --------------------------------- -->
+
+          <ng-template pTemplate="body" let-rowNode let-index let-rowData="rowData" let-columns="columns">
+            <tr>
+              <td *ngFor="let col of columns; let i = index" ttEditableColumn [title]="
+                  rowData[col.field] | formatNum: col.format:col.formatConfig
+                ">
+
+                <span *ngIf="col.field != 'Delete' &&
+                col.field != 'Update' &&
+                col.field != 'Comments'
+              ">
+                  {{ rowData[col.field] | formatNum: col.format:col.formatConfig }}
+                </span>
+
+                <span *ngIf="col.field == 'Delete'" class="btn-link" (click)="deleteFamily(rowData)">
+                  <i class="far fa-trash-alt fa-1-5x-custom" title="Delete"></i>
+                </span>
+
+                <span *ngIf="col.field == 'Update'" class="btn-link" (click)="editFamily(rowData)">
+                  <i class="fas fa-pencil-alt fa-1-5x-custom" title="Update/View"></i>
+                </span>
+              </td>
+            </tr>
+          </ng-template>
+          <!-- ----------------------------- Frozen Body ----------------------------- -->
+
+          <ng-template pTemplate="frozenbody" let-rowNode let-rowData="rowData" let-columns="columns">
+            <tr style="background: #f4f4f4">
+              <td *ngFor="let col of columns; let i = index" [title]="
+                  rowData[col.field] | formatNum: col.format:col.formatConfig
+                ">
+
+                <span>
+                  {{
+                    rowData[col.field]
+                      ? (rowData[col.field]
+                        | formatNum: col.format:col.formatConfig)
+                      : ''
+                  }}
+                </span>
+              </td>
+            </tr>
+          </ng-template>
+
+          <!-- ------------------- Message to show for empty Data -------------------- -->
+
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td [attr.colspan]="flatTableJson['columns'].length">
+                No data found.
+              </td>
+            </tr>
+          </ng-template>
+        </p-treeTable>
+      </div>
+    </div>
+
+
+
+
+    <div class="new-rio-footer">
+      <button pButton type="submit" label="Save" icon="fas fa-user-edit" class="ui-button-success"
+        [disabled]="!formNewRioModel.valid"></button>
+
+      <button pButton type="button" (click)="goBack()" label="Cancel" icon="far fa-times-circle"
+        class="ml-2 ui-button-warning"></button>
+    </div>
+
+
+  </form>
+</div>
+<p-confirmDialog appendTo="body" [style]="{ width: '50vw' }"></p-confirmDialog>

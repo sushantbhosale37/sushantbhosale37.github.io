@@ -1,0 +1,42 @@
+<div class="p-grid">
+  <div
+    class="filters-div"
+    *ngFor="let dim of defaultDimensions; let dimIdx = index"
+  >
+    <span class="ui-float-label">
+      {{ dim.label }}
+      <i (click)="remove(dim)" class="fas fa-times"></i>
+    </span>
+    <p-multiSelect
+      [options]="availableFilterData[dim.key]"
+      defaultLabel="Select {{ pluralize(dim.label) }}"
+      [(ngModel)]="selectedFilterData[dim.key]"
+      maxSelectedLabels="1"
+      selectedItemsLabel="{0} {{ pluralize(dim.label) }} selected"
+      [filter]="true"
+      [virtualScroll]="true"
+      appendTo="body"
+      itemSize="30"
+      filterBy="label,value.name"
+      resetFilterOnHide="true"
+      [style]="{ 'min-width': '200px' }"
+      (onPanelHide)="onChangeFilterCom(dim, dimIdx)"
+      (onClick)="onClickFilterCom(dim, dimIdx)"
+      emptyFilterMessage="No results found"
+    >
+    </p-multiSelect>
+  </div>
+  <div class="filters-div add-more" *ngIf="availableDimensions.length > 0">
+    <span class="ui-float-label">Add Filter</span>
+    <p-dropdown
+      [options]="availableDimensions"
+      [(ngModel)]="selectedDimensionToAdd"
+      placeholder="Select Dimension"
+      optionLabel="label"
+      dataKey="key"
+      [style]="{ 'min-width': '200px' }"
+      (onChange)="dimensionAdded()"
+      #dimensionsDropdown
+    ></p-dropdown>
+  </div>
+</div>

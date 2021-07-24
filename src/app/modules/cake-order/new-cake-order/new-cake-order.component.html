@@ -1,0 +1,197 @@
+<div class="ui-fluid">
+  <form [formGroup]="formNewRioModel" (ngSubmit)="submitHandler()">
+    <div class="ui-g-12">
+      <div class="ui-g-1 font-weight-bold">
+        <label for="CustName"> Customer Name :</label>
+      </div>
+      <div class="ui-g-3">
+        <p-dropdown [options]="CustNameOptions" (onChange)="customerChange()" [(ngModel)]="selectedCustName"
+          formControlName="selectedCustName" name="selectedCustName" optionLabel="label" [filter]="true"
+          filterBy="label,custMobile" placeholder="Select Customer" [ngClass]="{
+            'is-invalid':
+              f['selectedCustName'].invalid && (f['selectedCustName'].dirty || f['selectedCustName'].touched)
+          }"></p-dropdown>
+        <div *ngIf="
+            f['selectedCustName'].invalid && (f['selectedCustName'].dirty || f['selectedCustName'].touched)
+          " class="invalid-feedback">
+          <div *ngIf="f['selectedCustName'].errors.required">
+            Customer Name is required
+          </div>
+        </div>
+      </div>
+      <div class="ui-g-1">
+        <button pButton pRipple type="button" icon="fas fa-plus-circle"
+          class="ui-button-rounded ui-button-success edit-role-button" (click)="NewCustomer()"></button>
+      </div>
+      <div class="ui-g-1 font-weight-bold">
+        <label for="Mobile"> Mobile No. :</label>
+      </div>
+      <div class="ui-g-2">
+        <input type="text" [(ngModel)]="Mobile" id="Mobile" name="Mobile" pInputText placeholder="Mobile No." style="background: #e0dfdf;"
+          formControlName="Mobile" readonly="readonly" [ngClass]="{
+            'is-invalid':
+              f['Mobile'].invalid && (f['Mobile'].dirty || f['Mobile'].touched)
+          }" />
+        <div *ngIf="
+            f['Mobile'].invalid && (f['Mobile'].dirty || f['Mobile'].touched)
+          " class="invalid-feedback">
+          <div *ngIf="f['Mobile'].errors.required">
+            Mobile is required
+          </div>
+        </div>
+      </div>
+      <div class="ui-g-1 font-weight-bold">
+        <label for="OrdDate">Order Date :</label>
+      </div>
+      <div class="ui-g-3" style="margin-left:0">
+        <p-calendar [(ngModel)]="OrdDate" id="OrdDate" name="OrdDate" [(ngModel)]="OrdDate" pInputText
+          placeholder="Order Date" formControlName="OrdDate"></p-calendar>
+      </div>
+    </div>
+
+    <div class="ui-g-12" style="border: 1px solid gray;">
+      <div class="ui-g-12">
+        <div class="ui-g-1 font-weight-bold">
+          <label for="CakeProduct"> Cake Product :</label>
+        </div>
+        <div class="ui-g-5">
+          <p-dropdown [options]="CakeProductOptions" [(ngModel)]="selectedCakeProduct" (onChange)="productChange()"
+            formControlName="selectedCakeProduct" name="selectedCakeProduct" optionLabel="label" dataKey="key"
+            [filter]="true" filterBy="label" placeholder="Select Cake Product" [ngClass]="{
+              'is-invalid':
+                f['selectedCakeProduct'].invalid && (f['selectedCakeProduct'].dirty || f['selectedCakeProduct'].touched)
+            }"></p-dropdown>
+          <div *ngIf="
+              f['selectedCakeProduct'].invalid && (f['selectedCakeProduct'].dirty || f['selectedCakeProduct'].touched)
+            " class="invalid-feedback">
+            <div *ngIf="f['selectedCakeProduct'].errors.required">
+              Cake Product is required
+            </div>
+          </div>
+        </div>
+        <div class="ui-g-2">
+          <button pButton pRipple type="button" icon="fas fa-plus-circle"
+            class="ui-button-rounded ui-button-success edit-role-button" (click)="NewProduct()"></button>
+        </div>
+        <div class="ui-g-1 font-weight-bold">
+          <label for="CakeShape" style="width: 78px;"> Cake Shape :</label>
+        </div>
+        <div class="ui-g-3">
+          <p-dropdown [options]="CakeShapeOptions" [(ngModel)]="selectedCakeShape" formControlName="selectedCakeShape"
+            name="selectedCakeShape" optionLabel="label" dataKey="key" placeholder="Select Cake Shape" [ngClass]="{
+              'is-invalid':
+                f['selectedCakeShape'].invalid && (f['selectedCakeShape'].dirty || f['selectedCakeShape'].touched)
+            }">
+          </p-dropdown>
+          <div *ngIf="
+              f['selectedCakeShape'].invalid && (f['selectedCakeShape'].dirty || f['selectedCakeShape'].touched)
+            " class="invalid-feedback">
+            <div *ngIf="f['selectedCakeShape'].errors.required">
+              Cake Shape is required
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ui-g-12">
+        <div class="ui-g-1 font-weight-bold">
+          <label for="CakeTheme"> Cake Theme :</label>
+        </div>
+        <div class="ui-g-3">
+          <input type="text" [(ngModel)]="CakeTheme" id="CakeTheme" name="CakeTheme" pInputText placeholder="Cake Theme"
+            formControlName="CakeTheme" />
+        </div>
+        <div class="ui-g-1 font-weight-bold">
+          <label for="DeliveryDate">Delivery Date :</label>
+        </div>
+        <div class="ui-g-3" style="margin-left:0">
+          <p-calendar [(ngModel)]="DeliveryDate" id="DeliveryDate" name="DeliveryDate" [(ngModel)]="DeliveryDate"
+            pInputText placeholder="Delivery Date" formControlName="DeliveryDate"></p-calendar>
+        </div>
+        <div class="ui-g-1 font-weight-bold">
+          <label for="DeliveryTime"> Delivery Time :</label>
+        </div>
+        <div class="ui-g-3">
+          <p-calendar type="time" [(ngModel)]="selectedDeliveryTime" hourFormat="12" [timeOnly]="true"
+            formControlName="selectedDeliveryTime" name="selectedDeliveryTime" placeholder="Select Delivery Time"
+            [ngClass]="{
+              'is-invalid':
+                f['selectedDeliveryTime'].invalid && (f['selectedDeliveryTime'].dirty || f['selectedDeliveryTime'].touched)
+            }">
+          </p-calendar>
+          <div *ngIf="
+              f['selectedDeliveryTime'].invalid && (f['selectedDeliveryTime'].dirty || f['selectedDeliveryTime'].touched)
+            " class="invalid-feedback">
+            <div *ngIf="f['selectedDeliveryTime'].errors.required">
+              Delivery Time is required
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ui-g-12">
+        <div class="ui-g-1 font-weight-bold">
+          <label for="NameOnCake"> Name On Cake :</label>
+        </div>
+        <div class="ui-g-3">
+          <input type="text" [(ngModel)]="NameOnCake" id="NameOnCake" name="NameOnCake" pInputText
+            placeholder="Name On Cake" formControlName="NameOnCake" />
+        </div>
+        <div class="ui-g-1 font-weight-bold">
+          <label for="SplNote">Special Note :</label>
+        </div>
+        <div class="ui-g-6 ui-inputgroup">
+          <textarea type="text" id="SplNote" name="SplNote" [(ngModel)]="SplNote" pInputText placeholder="Special Note"
+            formControlName="SplNote"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="ui-g-12">
+      <div class="ui-g-1 font-weight-bold">
+        <label for="rate"> Rate :</label>
+      </div>
+      <div class="ui-g-2">
+        <input type="number" [(ngModel)]="rate" id="rate" name="rate" pInputText placeholder="Rate" style="background: #e0dfdf;"
+          formControlName="rate" readonly="readonly" />
+      </div>
+      <div class="ui-g-1 font-weight-bold">
+        <label for="advPayment"> Advance Payment :</label>
+      </div>
+      <div class="ui-g-2">
+        <input type="number" [(ngModel)]="advPayment" id="advPayment" name="advPayment" pInputText
+          placeholder="Advance Payment" formControlName="advPayment" />
+      </div>
+      <div class="ui-g-1 font-weight-bold" *ngIf="!isEdit">
+        <label for="DeliveryStatus"> Delivery Status :</label>
+      </div>
+      <div class="ui-g-2" *ngIf="!isEdit">
+        <p-radioButton class="radioBtn" name="DeliveryStatus" formControlName="DeliveryStatus" value="Ready"
+          label="Ready" [(ngModel)]="DeliveryStatus" inputId="preopt1">
+        </p-radioButton>
+        <p-radioButton class="radioBtn" name="DeliveryStatus" formControlName="DeliveryStatus" value="Pending"
+          label="Pending" [(ngModel)]="DeliveryStatus" inputId="preopt2">
+        </p-radioButton>
+      </div>
+      <div class="ui-g-1 font-weight-bold">
+        <label for="paymentMode"> Payment Mode :</label>
+      </div>
+      <div class="ui-g-2">
+        <p-radioButton class="radioBtn" name="paymentMode" formControlName="paymentMode" value="Cash" label="Cash"
+          [(ngModel)]="paymentMode" inputId="preopt1">
+        </p-radioButton>
+        <p-radioButton class="radioBtn" name="paymentMode" formControlName="paymentMode" value="Online" label="Online"
+          [(ngModel)]="paymentMode" inputId="preopt2">
+        </p-radioButton>
+      </div>
+    </div>
+
+    <div class="new-rio-footer">
+      <button pButton type="submit" label="Save" icon="fas fa-user-edit" class="ui-button-success"
+        [disabled]="!formNewRioModel.valid"></button>
+      <button pButton type="button" (click)="goBack()" label="Cancel" icon="far fa-times-circle"
+        class="ml-2 ui-button-warning"></button>
+    </div>
+
+  </form>
+</div>

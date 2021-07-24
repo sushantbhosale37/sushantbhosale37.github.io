@@ -1,0 +1,29 @@
+span {
+  font-weight: bold;
+}
+
+.metric-title {
+  margin-top: 15px;
+}
+
+.fas {
+  padding-top: 25px;
+  padding-left: 5px;
+  font-size: 15px;
+  color: #ff4c4c;
+  cursor: pointer;
+  opacity: 0.5;
+}
+
+.fas:hover {
+  opacity: 1;
+}
+
+.add-more {
+  margin-top: 15px;
+  opacity: 0.6;
+}
+
+.add-more:hover {
+  opacity: 1;
+}

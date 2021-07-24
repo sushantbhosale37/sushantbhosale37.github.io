@@ -1,0 +1,277 @@
+<div class="ui-fluid">
+  <form [formGroup]="formNewRioModel" (ngSubmit)="submitHandler()">
+    <div class="ui-g-12">
+      <div class="ui-g-1 font-weight-bold">
+        <label for="billNo">Bill No</label>
+      </div>
+      <div class="ui-g-2" style="margin-left:0">
+        <input type="text" [(ngModel)]="billNo" id="billNo" name="billNo" pInputText placeholder="billNo No"
+          formControlName="billNo" readonly="readonly" />
+      </div>
+      <div class="ui-g-3 font-weight-bold">
+        <p-checkbox [(ngModel)]="isOrdered" (onChange)="IsOrderChange()" name="isOrdered" formControlName="isOrdered"
+          binary="true"></p-checkbox>
+        <label for="isOrdered" style="margin-left: 10px; "> Is Advance Ordered</label>
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-1 font-weight-bold">
+        <label for="CustName"> Customer Name :</label>
+      </div>
+      <div class="ui-g-3">
+        <p-dropdown [options]="CustNameOptions" (onChange)="customerChange()" [(ngModel)]="selectedCustName"
+          formControlName="selectedCustName" name="selectedCustName" optionLabel="label" dataKey="key" [filter]="true" filterBy="label"
+          placeholder="Select Customer" [ngClass]="{
+            'is-invalid':
+              f['selectedCustName'].invalid && (f['selectedCustName'].dirty || f['selectedCustName'].touched)
+          }"></p-dropdown>
+        <div *ngIf="
+            f['selectedCustName'].invalid && (f['selectedCustName'].dirty || f['selectedCustName'].touched)
+          " class="invalid-feedback">
+          <div *ngIf="f['selectedCustName'].errors.required">
+            Customer Name is required
+          </div>
+        </div>
+      </div>
+      <div class="ui-g-1">
+        <button pButton type="button" icon="fas fa-plus-circle" iconPos="right"
+          class="ui-button-rounded ui-button-success edit-role-button" style="height: 26px;margin-top: 4px;"
+          (click)="NewCustomer()"></button>
+      </div>
+      <div class="ui-g-1 font-weight-bold">
+        <label for="custMobile"> Mobile No. :</label>
+      </div>
+      <div class="ui-g-2">
+        <input type="text" onkeyup="$(this).val($(this).val().replace(/[^0-9]/g, ''));" [(ngModel)]="custMobile" id="custMobile" name="custMobile" pInputText placeholder="Mobile"
+          formControlName="custMobile" readonly="readonly" [ngClass]="{
+            'is-invalid':
+              f['custMobile'].invalid && (f['custMobile'].dirty || f['custMobile'].touched)
+          }" />
+        <div *ngIf="
+            f['custMobile'].invalid && (f['custMobile'].dirty || f['custMobile'].touched)
+          " class="invalid-feedback">
+          <div *ngIf="f['custMobile'].errors.required">
+            Mobile is required
+          </div>
+        </div>
+      </div>
+      <div class="ui-g-1 font-weight-bold">
+        <label for="salesDate">Sales Date</label>
+      </div>
+      <div class="ui-g-3">
+        <p-calendar [(ngModel)]="salesDate" id="salesDate" name="salesDate" [(ngModel)]="salesDate" pInputText
+          placeholder="Sales Date" formControlName="salesDate">
+        </p-calendar>
+      </div>
+    </div>
+    <div class="ui-g-12" style="border: 1px solid gray;">
+      <form [formGroup]="formProduct">
+        <div class="ui-g-12">
+
+          <div class="ui-g-1 font-weight-bold">
+            <label for="ProdName"> Product :</label>
+          </div>
+          <div class="ui-g-4">
+            <p-dropdown [options]="ProdNameOptions" [(ngModel)]="selectedProdName" formControlName="selectedProdName"
+              name="selectedProdName" optionLabel="label" dataKey="key" [filter]="true" filterBy="label" placeholder="Select Product"></p-dropdown>
+          </div>
+          <div class="ui-g-1">
+            <button pButton type="button" icon="fas fa-plus-circle" iconPos="right"
+              class="ui-button-rounded ui-button-success edit-role-button" style="height: 26px;margin-top: 4px;"
+              (click)="NewProduct()"></button>
+
+          </div>
+          <div class="ui-g-1 font-weight-bold">
+            <label for="CakeShape"> Quantity :</label>
+          </div>
+          <div class="ui-g-2">
+            <input type="number" [(ngModel)]="qty" id="qty" name="qty" pInputText placeholder="Quantity"
+              formControlName="qty" />
+            
+          </div>
+
+          <div class="ui-g-1">
+            <button pButton type="button" *ngIf="!isProductUpdate" icon="fas fa-pencil-alt" label="ADD" iconPos="right"
+              [disabled]="!formProduct.valid" class="ui-button-rounded ui-button-success edit-role-button"
+              style="margin-bottom: 1%;width: 80px;" (click)="NewProductAdd()"></button>
+
+            <button pButton type="button" *ngIf="isProductUpdate" icon="fas fa-pencil-alt" label="Update"
+              iconPos="right" [disabled]="!formProduct.valid"
+              class="ui-button-rounded ui-button-success edit-role-button" style="margin-bottom: 1%;width: 100px;"
+              (click)="UpdateProductAdd()"></button>
+          </div>
+          <div class="ui-g-1">
+            <button pButton type="button" *ngIf="isProductUpdate" label="CANCEL" icon="far fa-times-circle"
+
+              iconPos="right" class="ui-button-rounded ml-2 ui-button-warning"
+              style="margin-bottom: 1%;width: 80px;" (click)="CancelProductAdd()"></button>
+          </div>
+
+        </div>
+      </form>
+      <div class="fr-payment-table vast-table" style="display: inline-block; width: 100%;">
+        <p-treeTable #ttFlat [value]="flatTableData" [columns]="flatTableJson['selectedColumns']" [paginator]="false"
+          [rows]="flatTableJson['page_size']" [first]="flatTableJson['page']"
+          [totalRecords]="flatTableJson['totalRecords']" [rowsPerPageOptions]="[10, 20, 50, 100]"
+          [lazy]="flatTableJson['lazy']" [loading]="flatTableJson['loading']" [sortMode]="flatTableJson['sortMode']"
+          [resizableColumns]="flatTableJson['resizableColumns']" [columnResizeMode]="flatTableJson['columnResizeMode']"
+          [reorderableColumns]="flatTableJson['reorderableColumns']" [frozenColumns]="flatTableJson['frozenCols']"
+          [frozenWidth]="flatTableJson['frozenWidth']" [scrollable]="flatTableJson['scrollable']"
+          [scrollHeight]="flatTableJson['scrollHeight']" [selectionMode]="flatTableJson['selectionMode']"
+          [(selection)]="flatTableJson['selectedColsModal']" [dataKey]="flatTableJson['selectionDataKey']"
+          [metaKeySelection]="flatTableJson['metaKeySelection']" [style]="{ width: '100%' }">
+          <!-- ------------------------------- Header -------------------------------- -->
+
+          <ng-template pTemplate="header" let-columns>
+            <tr>
+              <th *ngFor="let col of columns; let i = index" [ttSortableColumn]="col.field" ttResizableColumn
+                ttReorderableColumn [ttSortableColumnDisabled]="!col['options']['colSort']"
+                [ttResizableColumnDisabled]="!col['options']['resizable']"
+                [ttReorderableColumnDisabled]="!col['options']['movable']">
+                {{ col.displayName }}
+
+                <!-- <p-treeTableSortIcon [field]="col.field" *ngIf="col['options']['colSort']"></p-treeTableSortIcon> -->
+              </th>
+            </tr>
+            <tr *ngIf="flatTableJson['columnSearch']">
+              <ng-container *ngFor="let col of columns">
+                <th *ngIf="isHiddenColumn(col)">
+                  <input ymInput pInputText type="text" [style.visibility]="
+                      col['options']['colSearch'] ? 'visible' : 'hidden'
+                    " (input)="
+                      tt.filter($event.target.value, col.field, col.filterMatchMode)
+                    " />
+                </th>
+              </ng-container>
+            </tr>
+          </ng-template>
+
+
+          <ng-template pTemplate="colgroup" let-columns>
+            <colgroup>
+              <col *ngFor="let col of columns" [ngStyle]="{ width: col['width'] + 'px' }" />
+            </colgroup>
+          </ng-template>
+
+          <!-- -------------------------------- Body --------------------------------- -->
+
+          <ng-template pTemplate="body" let-rowNode let-index let-rowData="rowData" let-columns="columns">
+            <tr>
+              <td *ngFor="let col of columns; let i = index" ttEditableColumn [title]="
+                  rowData[col.field] | formatNum: col.format:col.formatConfig
+                ">
+
+                <span *ngIf="col.field != 'Delete' &&
+                col.field != 'Update'">
+                  {{ rowData[col.field] | formatNum: col.format:col.formatConfig }}
+                </span>
+
+                <span *ngIf="col.field == 'Delete'" class="btn-link" (click)="deleteSalesDetails(rowData)">
+                  <i class="far fa-trash-alt fa-1-5x-custom" title="Delete"></i>
+                </span>
+
+                <span *ngIf="col.field == 'Update'" class="btn-link" (click)="editSalesDetails(rowData)">
+                  <i class="fas fa-pencil-alt fa-1-5x-custom" title="Update/View"></i>
+                </span>
+              </td>
+            </tr>
+          </ng-template>
+          <!-- ----------------------------- Frozen Body ----------------------------- -->
+
+          <ng-template pTemplate="frozenbody" let-rowNode let-rowData="rowData" let-columns="columns">
+            <tr style="background: #f4f4f4">
+              <td *ngFor="let col of columns; let i = index" [title]="
+                  rowData[col.field] | formatNum: col.format:col.formatConfig
+                ">
+
+                <span>
+                  {{
+                    rowData[col.field]
+                      ? (rowData[col.field]
+                        | formatNum: col.format:col.formatConfig)
+                      : ''
+                  }}
+                </span>
+              </td>
+            </tr>
+          </ng-template>
+
+          <!-- ------------------- Message to show for empty Data -------------------- -->
+
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td [attr.colspan]="flatTableJson['columns'].length">
+                No data found.
+              </td>
+            </tr>
+          </ng-template>
+        </p-treeTable>
+      </div>
+
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-2 font-weight-bold">
+        <label for="netAmt"> Net Amount :</label>
+      </div>
+      <div class="ui-g-2">
+        <input type="number" [(ngModel)]="netAmt" id="netAmt" name="netAmt" pInputText placeholder="Net Amount"
+          formControlName="netAmt" readonly="readonly" />
+      </div>
+      <div class="ui-g-2 font-weight-bold">
+        <label for="discountAmt"> Discount :</label>
+      </div>
+      <div class="ui-g-2">
+        <input type="number" [(ngModel)]="discountAmt" id="discountAmt" (keyup)="calculationAmount()" name="discountAmt"
+          pInputText placeholder="Discount" formControlName="discountAmt" />
+      </div>
+
+      <div class="ui-g-2 font-weight-bold">
+        <label for="deliveryCharges"> Delivery Charges :</label>
+      </div>
+      <div class="ui-g-2">
+        <input type="number" [(ngModel)]="deliveryCharges" id="deliveryCharges" (keyup)="calculationAmount()"
+          name="deliveryCharges" pInputText placeholder="Delivery Charges" formControlName="deliveryCharges" />
+      </div>
+
+    </div>
+
+    <div class="ui-g-12">
+      <div class="ui-g-2 font-weight-bold">
+        <label for="advPayment"> Advance Payment :</label>
+      </div>
+      <div class="ui-g-2">
+        <input type="number" [(ngModel)]="advPayment" id="advPayment" (keyup)="calculationAmount()" name="advPayment"
+          pInputText placeholder="Advance Payment" formControlName="advPayment" />
+      </div>
+      <div class="ui-g-2 font-weight-bold">
+        <label for="totalAmt"> Total Amount :</label>
+      </div>
+      <div class="ui-g-2">
+        <input type="number" [(ngModel)]="totalAmt" id="totalAmt" name="totalAmt" pInputText placeholder="Total Amount"
+          formControlName="totalAmt" readonly="readonly" />
+      </div>
+
+      <div class="ui-g-2 font-weight-bold">
+        <label for="paymentMode"> Payment Mode :</label>
+      </div>
+      <div class="ui-g-2">
+        <p-radioButton class="radioBtn" name="paymentMode" formControlName="paymentMode" value="Cash" label="Cash"
+          [(ngModel)]="paymentMode" inputId="preopt1">
+        </p-radioButton>
+        <p-radioButton class="radioBtn" name="paymentMode" formControlName="paymentMode" value="Online" label="Online"
+          [(ngModel)]="paymentMode" inputId="preopt2">
+        </p-radioButton>
+      </div>
+    </div>
+    <div class="new-rio-footer">
+      <button pButton type="submit" label="Save" icon="fas fa-user-edit" class="ui-button-success"
+        [disabled]="!formNewRioModel.valid"></button>
+
+      <button pButton type="button" (click)="goBack()" label="Cancel" icon="far fa-times-circle"
+        class="ml-2 ui-button-warning"></button>
+    </div>
+
+
+  </form>
+</div>
+<p-confirmDialog appendTo="body" [style]="{ width: '50vw' }"></p-confirmDialog>

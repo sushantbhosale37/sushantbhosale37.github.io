@@ -1,0 +1,22 @@
+<div class="cards-container">
+  <div class="p-grid" *ngFor="let cards of cardsChunk">
+    <div class="p-col" *ngFor="let card of cards">
+      <p style="float: left; margin: 23px 15px;">
+        <i [ngClass]="card.imageClass"></i>
+      </p>
+      <p-card
+        styleClass="ui-card-shadow"
+        [style]="{ 'background-color': card.color }"
+      >
+        <span>
+          <h6>
+            {{ card.displayName }}
+          </h6>
+          <h5>
+            {{ card.value | formatNum: card.format:card.config }}
+          </h5>
+        </span>
+      </p-card>
+    </div>
+  </div>
+</div>

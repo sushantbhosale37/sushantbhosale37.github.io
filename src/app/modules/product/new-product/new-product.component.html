@@ -1,0 +1,130 @@
+<div class="ui-fluid">
+  <form [formGroup]="formNewRioModel" (ngSubmit)="submitHandler()">
+    <div class="ui-g-12">
+      <div class="ui-g-4 font-weight-bold">
+        <label for="prodName"> Product Name :</label>
+      </div>
+      <div class="ui-g-6">
+        <input type="text" [(ngModel)]="prodName" id="prodName" name="prodName" pInputText placeholder="Product Name"
+          formControlName="prodName" [ngClass]="{
+            'is-invalid':
+              f['prodName'].invalid && (f['prodName'].dirty || f['prodName'].touched)
+          }">
+        <div *ngIf="
+            f['prodName'].invalid && (f['prodName'].dirty || f['prodName'].touched)
+          " class="invalid-feedback">
+          <div *ngIf="f['prodName'].errors.required">
+            Product Name is required
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="ui-g-12">
+
+      <div class="ui-g-4 font-weight-bold">
+        <label for="prodCategory"> Product Category :</label>
+      </div>
+      <div class="ui-g-6">
+        <p-dropdown [options]="prodCategoryOptions" [(ngModel)]="selectedProdCategory" [filter]="true" filterBy="label"
+          formControlName="selectedProdCategory" name="selectedProdCategory" optionLabel="label" dataKey="key"
+          placeholder="Select Product Category" [ngClass]="{
+            'is-invalid':
+              f['selectedProdCategory'].invalid && (f['selectedProdCategory'].dirty || f['selectedProdCategory'].touched)
+          }"></p-dropdown>
+        <div *ngIf="
+            f['selectedProdCategory'].invalid && (f['selectedProdCategory'].dirty || f['selectedProdCategory'].touched)
+          " class="invalid-feedback">
+          <div *ngIf="f['selectedProdCategory'].errors.required">
+            Product Category is required
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4 font-weight-bold">
+        <label for="ProdMeasure"> Product Measurement :</label>
+      </div>
+      <div class="ui-g-6">
+        <p-dropdown [options]="ProdMeasureOptions" [(ngModel)]="selectedProdMeasure"
+          formControlName="selectedProdMeasure" name="ProdMeasure" optionLabel="label" dataKey="key"
+          placeholder="Select Product Measurement" [ngClass]="{
+            'is-invalid':
+              f['selectedProdMeasure'].invalid && (f['selectedProdMeasure'].dirty || f['selectedProdMeasure'].touched)
+          }"></p-dropdown>
+        <div *ngIf="
+            f['selectedProdMeasure'].invalid && (f['selectedProdMeasure'].dirty || f['selectedProdMeasure'].touched)
+          " class="invalid-feedback">
+          <div *ngIf="f['selectedProdMeasure'].errors.required">
+            Product Measurement is required
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4 font-weight-bold">
+        <label for="prodQty"> Quantity :</label>
+      </div>
+      <div class="ui-g-3">
+        <input type="number" [(ngModel)]="prodQty" id="prodQty" name="prodQty" pInputText placeholder="Quantity"
+          formControlName="prodQty" [ngClass]="{
+            'is-invalid':
+              f['prodQty'].invalid && (f['prodQty'].dirty || f['prodQty'].touched)
+          }" />
+        <div *ngIf="
+            f['prodQty'].invalid && (f['prodQty'].dirty || f['prodQty'].touched)
+          " class="invalid-feedback">
+          <div *ngIf="f['prodQty'].errors.required">
+            Quantity is required
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4 font-weight-bold">
+        <label for="prodRate"> Rate :</label>
+      </div>
+      <div class="ui-g-3">
+        <input type="number" [(ngModel)]="prodRate" id="prodRate" name="prodRate" pInputText placeholder="Rate"
+          formControlName="prodRate" [ngClass]="{
+            'is-invalid':
+              f['prodRate'].invalid && (f['prodRate'].dirty || f['prodRate'].touched)
+          }" />
+        <div *ngIf="
+            f['prodRate'].invalid && (f['prodRate'].dirty || f['prodRate'].touched)
+          " class="invalid-feedback">
+          <div *ngIf="f['prodRate'].errors.required">
+            Rate is required
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4 font-weight-bold">
+        <label for="prodDescription">Description :</label>
+      </div>
+      <div class="ui-g-6 ui-inputgroup">
+        <textarea type="text" id="prodDescription" name="prodDescription" [(ngModel)]="prodDescription" pInputText placeholder="Description"
+          formControlName="prodDescription"></textarea>
+      </div>
+
+
+
+    </div>
+
+    <div class="new-rio-footer">
+      <button pButton type="submit" label="Save" icon="fas fa-user-edit" class="ui-button-success"
+        [disabled]="!formNewRioModel.valid"></button>
+
+      <button pButton type="button" (click)="goBack()" label="Cancel" icon="far fa-times-circle"
+        class="ml-2 ui-button-warning"></button>
+    </div>
+
+
+  </form>
+</div>

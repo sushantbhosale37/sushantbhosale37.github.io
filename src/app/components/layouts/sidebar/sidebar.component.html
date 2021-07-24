@@ -1,0 +1,76 @@
+<!-- Manual Expand -->
+<nav class="bg-white sidebar sidebar-offcanvas" id="sidebar" [ngStyle]="{ 'width.em': sidenavWidth }"
+  (mouseover)="toggleExpand(true)" (mouseout)="toggleExpand(false)">
+  <!-- Manual Expand -->
+  <div class="app-info-details">
+    <!-- Manual Expand -->
+    <span class="sidebar-toggler ml-2" (click)="toggleExpand(!show)">
+      <span class="pi pi-bars" style="font-size: 1.75em;"></span>
+    </span>
+    <!-- Manual Expand -->
+    <a class="brand-logo" opened="false" href="https://franklymedia.com" target="_blank">
+      <img [hidden]="!show" src="assets/images/login-icon1.png" alt="Cake Art" style="width: 115px;" />
+    </a>
+  </div>
+  <div class="user-info">
+    <a [routerLink]="['/user-profile']" [routerLinkActive]="['router-link-active']"
+      [routerLinkActiveOptions]="{ exact: true }">
+      <div class="user-profile">
+        <div class="user-avatar">
+          <img src="{{ config['avatar'] }}" alt="" />
+        </div>
+        <p class="name" [hidden]="!show">
+          {{ config['name'] }}
+        </p>
+      </div>
+    </a>
+    <p class="designation" [hidden]="!show">
+      {{ config['designation'] | uppercase }}
+    </p>
+  </div>
+  <div class="nested-menu" *ngFor="
+  let appGroup of appGroups;
+  let idx = index
+">
+    <a title="{{ appGroup.name }}" class="list-group-item"
+      [ngStyle]="{'color':'#e2dbdb' ,'background-color' : '#1d3954'}"
+      (click)="addExpandClass(appGroup.id)">
+      <div class="app-icon">
+        <i [class]="
+        appGroup.id == val ? 'pi pi-angle-down' : 'pi pi-angle-right'
+      ">
+        </i>
+      </div>
+      <span [hidden]="!show">
+        {{ appGroup.name }}
+      </span>
+    </a>
+    <div class="scroll-menu" [ngStyle]="appGroup.id == val ? {'max-height' : '30vh' }: {'max-height':'0vh'}">
+      <li class="nested" [class.expand]="appGroup.id == val">
+        <ul class="submenu">
+          <li *ngFor="let app of appGroup.apps">
+            <a title="{{ app.name }}" [routerLink]="[app.route]" routerLinkActive #rla="routerLinkActive"
+              [ngStyle]="rla.isActive ? {'color': '#3333ff', 'font-weight': 'bold' }: {'color' : '#43b6fa'}">
+              <div class="app-icon" (click)="preventPropogation($event)">
+                <i class="{{ app.iconClass }}" aria-hidden="true"> </i>
+              </div>
+              <div [hidden]="!show" (click)="preventPropogation($event)" [ngStyle]="{'margin-left': '10px'}">
+                {{ app.name }}
+              </div>
+            </a>
+          </li>
+        </ul>
+      </li>
+    </div>
+  </div>
+  <div class="nested-menu log-out">
+    <a class="list-group-item" href="javascript:void(0)" (click)="logout($event)" title="Logout">
+      <div class="app-icon">
+        <i class="fas fa-power-off"></i>
+      </div>
+      <span [hidden]="!show" style="margin-left: 10px;">
+        Logout
+      </span>
+    </a>
+  </div>
+</nav>

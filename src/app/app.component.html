@@ -1,0 +1,7 @@
+<div id="loaderdiv" *ngIf="displayLoader">
+  <p-progressSpinner class="ajax-loader"></p-progressSpinner>
+</div>
+<p-toast position="top-right"></p-toast>
+<div [ngClass]="{'impersonated': impersonated}">
+  <router-outlet></router-outlet>
+</div>

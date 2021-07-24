@@ -1,0 +1,28 @@
+<div class="dropdown d-inline-block">
+    <div style="padding:0px 5px 5px 5px" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="far fa-bell notification" aria-hidden="true">
+            <span class="badge" *ngIf="chatcount > 0 && chatcount < 100">
+                <span [textContent]="chatcount"></span>
+            </span>
+            <span *ngIf="chatcount > 99" style="width: 23px" class="badge">
+                <span>99+</span>
+            </span>
+        </i>
+    </div>
+    <div class="dropdown-menu dropdown-main" aria-labelledby="dropdownMenuButton">
+        <div class="top-title">
+            <span>Unread ({{chatcount}})</span>
+            <p class="notes">Note: Last 7 Days </p>
+        </div>
+        <div class="chatlist">
+
+            <div class="dropdown-item contentlist" [ngClass]="al.is_read" *ngFor="let al of commentData"
+                (click)="getChatdetails(al)" href="">
+                <span class="title">{{al.user_name}}</span><br>
+                <span class="comment">{{al.comment}}</span><br>
+                <span class="time">{{nowfrom(al.inserted_at)}}</span>
+            </div>
+
+        </div>
+    </div>
+</div>

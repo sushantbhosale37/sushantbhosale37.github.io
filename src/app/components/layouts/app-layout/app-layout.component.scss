@@ -1,0 +1,30 @@
+.row {
+  margin-right: 0;
+}
+
+.content-wrapper {
+  background: #f2f7f8;
+  margin-left: 13rem;
+  height: 100vh;
+  padding: 1rem 1rem 0 1rem;
+  transition: all 0.5s ease;
+  overflow: auto;
+  width: 100%;
+}
+
+.content-wrapper.full-page-wrapper {
+  margin-left: 0;
+  width: 100%;
+}
+
+.container-scroller {
+  height: 100vh;
+  position: relative;
+}
+
+/* @media (max-width: 991px) {
+  .content-wrapper {
+    margin-left: 0;
+    width: 100%;
+  }
+} */

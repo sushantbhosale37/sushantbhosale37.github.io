@@ -1,0 +1,79 @@
+<div class="ui-fluid">
+  <form [formGroup]="formNewRioModel" (ngSubmit)="submitHandler()">
+    <div class="ui-g-12">
+      <div class="ui-g-4 font-weight-bold">
+        <label for="fMemberNm"> Family Member Name :</label>
+      </div>
+      <div class="ui-g-6">
+        <input type="text" [(ngModel)]="fMemberNm" id="fMemberNm" name="fMemberNm" pInputText placeholder="Family Member Name"
+          formControlName="fMemberNm" [ngClass]="{
+            'is-invalid':
+              f['fMemberNm'].invalid && (f['fMemberNm'].dirty || f['fMemberNm'].touched)
+          }" />
+        <div *ngIf="
+            f['fMemberNm'].invalid && (f['fMemberNm'].dirty || f['fMemberNm'].touched)
+          " class="invalid-feedback">
+          <div *ngIf="f['fMemberNm'].errors.required">
+            Family Member Name is required
+          </div>
+        </div>
+      </div>
+
+      <div class="ui-g-4 font-weight-bold">
+        <label for="selectedRelationship"> Relationship :</label>
+      </div>
+      <div class="ui-g-6">
+        <p-dropdown [options]="RelationshipOptions" [(ngModel)]="selectedRelationship" formControlName="selectedRelationship"
+          name="selectedRelationship" optionLabel="label" dataKey="key" placeholder="Select Relationship" [filter]="true" filterBy="label" [ngClass]="{
+            'is-invalid':
+              f['selectedRelationship'].invalid && (f['selectedRelationship'].dirty || f['selectedRelationship'].touched)
+          }"></p-dropdown>
+        <div *ngIf="
+            f['selectedRelationship'].invalid && (f['selectedRelationship'].dirty || f['selectedRelationship'].touched)
+          " class="invalid-feedback">
+          <div *ngIf="f['selectedRelationship'].errors.required">
+            Relationship is required
+          </div>
+        </div>
+      </div>
+
+      <div class="ui-g-4 font-weight-bold">
+        <label for="birthDate">Birth Date</label>
+      </div>
+      <div class="ui-g-6" style="margin-left:-7px">
+        <p-calendar [(ngModel)]="birthDate" id="birthDate" [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange" [maxDate]="maxDate" name="birthDate" [(ngModel)]="birthDate" pInputText
+          placeholder="Birth Date" formControlName="birthDate"></p-calendar>
+      </div>
+
+      <div class="ui-g-4 font-weight-bold">
+        <label for="mobile"> Mobile No. :</label>
+      </div>
+      <div class="ui-g-6">
+        <input type="text" onkeyup="$(this).val($(this).val().replace(/[^0-9]/g, ''));" [(ngModel)]="mobile" id="mobile" name="mobile" pInputText placeholder="mobile No"
+          formControlName="mobile" [ngClass]="{
+            'is-invalid':
+              f['mobile'].invalid && (f['mobile'].dirty || f['mobile'].touched)
+          }" />
+        <div *ngIf="
+            f['mobile'].invalid && (f['mobile'].dirty || f['mobile'].touched)
+          " class="invalid-feedback">
+          <div *ngIf="f['mobile'].errors.required">
+            Mobile is required
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="new-rio-footer">
+      <button pButton type="submit" label="ADD" icon="fas fa-user-edit" class="ui-button-success"
+        [disabled]="!formNewRioModel.valid"></button>
+
+      <button pButton type="button" (click)="goBack()" label="Cancel" icon="far fa-times-circle"
+        class="ml-2 ui-button-warning"></button>
+    </div>
+
+
+  </form>
+</div>

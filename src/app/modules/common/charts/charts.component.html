@@ -1,0 +1,71 @@
+<p-steps *ngIf="charts.length > 1" [model]="charts" [(activeIndex)]="activeChartIdx"
+  (activeIndexChange)="chartChanged()" [readonly]="false" data-html2canvas-ignore>
+</p-steps>
+<div data-html2canvas-ignore class="dropdown">
+  <span class="dropdown-toggle float-right" style="cursor: pointer ;margin-left: .6rem !important;
+  " id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" title="Export to PPT or JPEG" aria-expanded="true">
+    <i class="fas fa-download share-icon">
+      <span class="caret"></span>
+    </i>
+   &nbsp;Export
+  </span>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <a class="dropdown-item" href="#" (click)="captureFn('image')">Image</a>
+    <a class="dropdown-item" href="#" (click)="captureFn('ppt')">PPT</a>
+  </div>
+
+  <span style="cursor: pointer" (click)="reinitChart()" class="float-right">
+    <i title="Reset Chart/Reset Zoom" class="fas fa-sync-alt share-icon ml-3"></i>&nbsp; Reset Chart
+  </span>
+  <div *ngIf="calculate_value['is_show']" class="popover-container d-inline-block ml-2 float-right">
+    <div>
+      <i class="fas fa-calculator share-icon" style="cursor: pointer" aria-haspopup="true" aria-expanded="true">
+         </i>&nbsp; Statistics Values
+    </div>
+    <div style=""class="pop-over-cal">
+      <span *ngIf="calculate_value['avg']" class=" calculation-box float-right">
+        <span style="font-weight: bold;">Average</span>
+        <span *ngFor="let value of calculateData;"><br>
+          <div class="calculate-color" [ngStyle]="{ 'background': value['borderColor'] }"></div>{{
+      value['avg'] | formatNum: value['format']:[]
+    }}
+        </span>
+      </span>
+      <span *ngIf="calculate_value['max']" class=" calculation-box float-right">
+        <span style="font-weight: bold;">Maximum</span>
+        <span *ngFor="let value of calculateData;"><br>
+          <div class="calculate-color" [ngStyle]="{ 'background': value['borderColor'] }"></div>{{
+      value['max'] | formatNum: value['format']:[]
+    }}
+        </span>
+      </span>
+      <span *ngIf="calculate_value['med']" class=" calculation-box float-right">
+        <span style="font-weight: bold;">Medium</span>
+        <span *ngFor="let value of calculateData;"><br>
+          <div class="calculate-color" [ngStyle]="{ 'background': value['borderColor'] }"></div>{{
+      value['med'] | formatNum: value['format']:[]
+    }}
+        </span>
+      </span>
+      <span *ngIf="calculate_value['min']" class=" calculation-box float-right">
+        <span style="font-weight: bold;">Minimum</span>
+        <span *ngFor="let value of calculateData;"><br>
+          <div class="calculate-color" [ngStyle]="{ 'background': value['borderColor'] }"></div>{{
+      value['min'] | formatNum: value['format']:[]
+    }}
+        </span>
+      </span>
+    </div>
+  </div>
+  <small *ngIf="zoom" class="font-italic ml-2">
+    Scroll to zoom in/out
+  </small>
+  <small *ngIf="zoom" class="font-italic ml-2">
+    Click on the legends to show/hide the individual data points.
+  </small>
+</div>
+<a id="link"></a>
+<p-chart #myChart [type]="charts[activeChartIdx]['key']" [data]="data" style="display: inline-block;width: 100%;"
+  [width]="width == '' ? null : width" [height]="height == '' ? null : height" (onDataSelect)="selectData($event)"
+  [options]="options" [plugins]="[plugIn]">
+</p-chart>

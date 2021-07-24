@@ -1,0 +1,38 @@
+.notifications {
+  margin-right: 1rem;
+  position: relative;
+}
+
+span.count {
+  color: #f00;
+  top: 5px;
+  position: relative;
+  border: 1px solid #ccc;
+  padding: 3px;
+  border-radius: 50%;
+}
+
+.notifications .dropdown-item {
+  max-width: 350px;
+  white-space: normal;
+  border-bottom: 1px solid #ccc;
+  font-size: 10px;
+}
+
+.notifications .dropdown-menu {
+  max-height: 425px;
+  overflow: auto;
+}
+
+span.msg {
+  font-size: 0.8925rem;
+}
+span.at-time {
+  font-size: 12px;
+}
+span.comment-on {
+  font-size: 12px;
+}
+span.user {
+  font-size: 12px;
+}

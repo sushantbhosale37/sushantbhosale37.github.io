@@ -1,0 +1,50 @@
+{
+      "filters": {
+            "url": "/frankly/v1/adops360/filter",
+            "metric": {
+                  "default": [],
+                  "available": []
+            },
+            "dimension": {
+                  "default": [
+                        {
+                              "key": "derived_station_rpt",
+                              "label": "Property",
+                              "config_json": null
+                        },
+                        {
+                              "key": "media_type",
+                              "label": "Media Type",
+                              "config_json": null
+                        },
+                        {
+                              "key": "derived_device_type1_name",
+                              "label": "Device Type",
+                              "config_json": null
+                        }
+                  ],
+                  "available": []
+            },
+            "datePeriod": [
+                  {
+                        "key": "time_key",
+                        "label": "Date",
+                        "minDate": "20180901",
+                        "filterType": "date_range",
+                        "defaultDate": [
+                              {
+                                    "value": 30,
+                                    "period": "days",
+                                    "startOf": false
+                              },
+                              {
+                                    "value": 1,
+                                    "period": "day"
+                              }
+                        ]
+                  }
+            ]
+      },
+      "groupBy": [],
+      "saveView": false
+}

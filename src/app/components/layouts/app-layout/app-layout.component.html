@@ -1,0 +1,16 @@
+<div class="row row-offcanvas row-offcanvas-right">
+  <!-- component sidebar -->
+  <app-sidebar
+    [expanded]="true"
+    (childEvent)="sidenavWidth = $event"
+  ></app-sidebar>
+  <!-- partial -->
+  <div
+    class="content-wrapper"
+    [ngStyle]="{ 'margin-left.rem':sidenavWidth == 4.3 ? sidenavWidth : sidenavWidth - 2 }"
+  >
+    <router-outlet></router-outlet>
+    <!-- <app-footer></app-footer> -->
+  </div>
+  <!-- partial -->
+</div>

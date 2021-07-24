@@ -1,0 +1,107 @@
+#UsefulAdopsTools {
+  font-size: 16px;
+}
+
+.contactRow {
+  padding: 1%;
+}
+
+.editContact-modal .modal-content {
+  max-width: 500px;
+}
+body {
+  position: relative;
+}
+ul.nav-pills {
+  top: 20px;
+  position: fixed;
+}
+.jumbotron {
+  text-align: center;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  margin-bottom: 0px;
+  color: inherit;
+  background-color: #eee;
+}
+
+.right-panel header.header {
+  background: #fff;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.15);
+  clear: both;
+  display: inline-block;
+  padding: 15px 20px 13px 20px;
+  width: 100%;
+}
+.content {
+  float: left;
+  padding: 0 20px;
+  width: 100%;
+}
+.right-panel {
+  display: table-cell;
+  padding-left: 0 !important;
+  -webkit-transition: all 0.35s ease;
+  -moz-transition: all 0.35s ease;
+  -ms-transition: all 0.35s ease;
+  -o-transition: all 0.35s ease;
+  transition: all 0.35s ease;
+}
+.card {
+  opacity: 0.9;
+  /* height: 100%; */
+  margin: 30px;
+  border-radius: 0;
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
+}
+
+.card-header {
+  margin-bottom: 0;
+  background-color: rgba(0, 0, 0, 0.03);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+.utm-input {
+  width: 48%;
+  margin: 0 2% 2% 0%;
+  display: inline-block;
+}
+
+.utm-input1 {
+  width: 48%;
+  margin-left: 19px;
+  display: inline-block;
+}
+.card-body {
+  -webkit-box-flex: 1;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  padding: 1.25rem;
+}
+
+@media (max-width: 1368px) {
+  .content {
+    padding: 0 15px;
+  }
+}
+@media screen and (max-width: 810px) {
+  #section1,
+  #section2,
+  #section3,
+  #section41,
+  #section42 {
+    margin-left: 150px;
+  }
+}
