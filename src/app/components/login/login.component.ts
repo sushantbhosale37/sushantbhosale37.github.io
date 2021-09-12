@@ -31,6 +31,7 @@ export class LoginComponent {
   result: object;
   userEmail: string;
   token: String;
+  type: string;
 
   constructor(
     private authService: AuthService,
@@ -48,6 +49,12 @@ export class LoginComponent {
       this.dialogService.dialogComponentRef.destroy();
     }
     this._titleService.setTitle('Cake Art | CP Soft-Tech');
+    this.route
+      .queryParams
+      .subscribe(params => {
+        // Defaults to 0 if no query param provided.
+        this.type = params['type'] + " Login";
+      });
   }
 
   onLogin(): void {
@@ -60,6 +67,7 @@ export class LoginComponent {
     };
     this.authService.login(req).then(
       response => {
+        debugger;
         if (response['access_token']) {
           this._loadingBar.complete();
           // let reqUser = {
@@ -86,7 +94,7 @@ export class LoginComponent {
         console.log('error', error);
         this.toastService.displayToast({
           severity: 'error',
-          summary: 'Incorrect',
+          summary: 'Incorrect Password',
           detail: error.error['message']
         });
         localStorage.removeItem('token');
@@ -98,7 +106,7 @@ export class LoginComponent {
         console.log('err', err);
         this.toastService.displayToast({
           severity: 'error',
-          summary: 'Incorrect',
+          summary: 'Incorrect Password',
           detail: 'Email or Password incorrect'
         });
         localStorage.removeItem('token');

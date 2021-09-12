@@ -11,7 +11,7 @@
   </div>
 
   <div class="login-card">
-    <p-card header="Admin Login" class="center" styleClass="ui-card-shadow">
+    <p-card [header]="type" class="center" styleClass="ui-card-shadow">
       <p-header>
         <img class="logo-img" src="assets/images/login-icon1.png" style="width: 150px;" />
       </p-header>
@@ -20,7 +20,7 @@
         <div>
           <div class="ui-g ui-fluid">
             <div class="ui-g-12">
-              <span class="bold">Email</span>
+              <span class="bold">UserName</span>
             </div>
             <div class="ui-g-12">
               <div class="ui-inputgroup" *ngIf="!newUser">

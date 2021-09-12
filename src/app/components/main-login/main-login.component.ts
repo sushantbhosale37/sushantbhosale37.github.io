@@ -53,7 +53,11 @@ export class MainLoginComponent {
   }
 
   adminLogin(){
-    this.router.navigate(['/admin-login']);
+    this.router.navigate(['/admin-login'], { queryParams: { type: "Admin" } });
+  }
+
+  userLogin(){
+    this.router.navigate(['/admin-login'], { queryParams: { type: "User" } });
   }
 
   togglePassword(pass: string) {
