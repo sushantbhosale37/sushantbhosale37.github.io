@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import * as moment from 'moment';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import * as XLSX from 'xlsx';
+import jspdf from 'jspdf'
 
 @Component({
   selector: 'ym-sales-report',
@@ -430,43 +431,6 @@ export class SalesReportComponent implements OnInit {
     }    
   }
 
-  public SavePDF(): void {  
-    // let content=this.content.nativeElement;  
-    // let doc = new jsPDF();  
-    // let _elementHandlers =  
-    // {  
-    //   '#editor':function(element,renderer){  
-    //     return true;  
-    //   }  
-    // };  
-    // doc.fromHTML(content.innerHTML,15,15,{  
-  
-    //   'width':190,  
-    //   'elementHandlers':_elementHandlers  
-    // });  
-  
-    // doc.save('test.pdf');  
-  } 
-  // exportPdf(): void {
-  //   this.isForExport = true;
-  //   this.savePdfFile();
-  // }
-
-  // private savePdfFile(): void {
-  //   const pdfTemplate = require('pdf-template')
- 
-  //   pdfTemplate({
-  //     template: 'example.pdf',
-  //     output: 'output.pdf',
-  //     data: this.rows
-  //   }).then((res) => {
-  //     console.log(res)
-  //   }).catch((err) => {
-  //     console.error(err)
-  //   })
-  //   this.isForExport = false;
-  // }
-
   changeHeaders(ws){
     var Heading = [
       ["Bill No", "Customer Name", "Sales Date", "Net Amount", "Delivery Charges", "Discount Amount", "Total Amount", "Payment Mode", "Advance Payment"],
@@ -486,9 +450,43 @@ export class SalesReportComponent implements OnInit {
       {wch:15},
   ];
 
-    ws["!cols"] = wscols;
-
-   
+    ws["!cols"] = wscols;   
   }
+
+  // public SavePDF(): void {  
+  //   let content=this.content.nativeElement;  
+  //   let doc = new jspdf();  
+  //   let _elementHandlers =  
+  //   {  
+  //     '#editor':function(element,renderer){  
+  //       return true;  
+  //     }  
+  //   };  
+  //   doc.html(content.innerHTML,{ 
+  //     width: 190,
+  //     'elementHandlers': _elementHandlers
+  //   });  
+  
+  //   doc.save('test.pdf');  
+  // } 
+  // exportPdf(): void {
+  //   this.isForExport = true;
+  //   this.savePdfFile();
+  // }
+
+  // private savePdfFile(): void {
+  //   const pdfTemplate = require('pdf-template')
+ 
+  //   pdfTemplate({
+  //     template: 'example.pdf',
+  //     output: 'output.pdf',
+  //     data: this.rows
+  //   }).then((res) => {
+  //     console.log(res)
+  //   }).catch((err) => {
+  //     console.error(err)
+  //   })
+  //   this.isForExport = false;
+  // }
 
 }
