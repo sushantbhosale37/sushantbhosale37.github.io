@@ -21,6 +21,7 @@ export class SalesReportComponent implements OnInit {
   flatTableColumnDef: any[];
   fromDate: Date;
   toDate: Date;
+  todaysDate: Date;
   formNewRioModel: FormGroup;
   isForExport = false;
   rows: any;
@@ -33,6 +34,7 @@ export class SalesReportComponent implements OnInit {
   ngOnInit() {
     this.fromDate = moment().toDate();
     this.toDate = moment().toDate();
+    this.todaysDate = moment().toDate();
     this.formNewRioModel = this.fb.group({
       fromDate: new FormControl('', Validators.required),
       toDate: new FormControl('', Validators.required)      
@@ -419,7 +421,7 @@ export class SalesReportComponent implements OnInit {
   private saveExcelFile(): void {
 
     if(this.isForExport == true){
-      const fileName: string = "Sales_Report.xlsx";
+      const fileName: string = "Sales_Report_" + moment(this.todaysDate).format('DD_MMM_YYYY') + ".xlsx";
     const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.rows);
     this.changeHeaders(ws);
     const wb: XLSX.WorkBook = { Sheets: { 'data': ws }, SheetNames: ['data'] };

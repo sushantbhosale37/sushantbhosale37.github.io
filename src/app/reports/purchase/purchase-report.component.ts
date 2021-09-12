@@ -20,6 +20,7 @@ export class PurchaseReportComponent implements OnInit {
   flatTableData: TreeNode[];
   fromDate: Date;
   toDate: Date;
+  todaysDate: Date;
   formNewRioModel: FormGroup;
   isForExport = false;
   rows: any;
@@ -32,6 +33,7 @@ export class PurchaseReportComponent implements OnInit {
   ngOnInit() {
     this.fromDate = moment().toDate();
     this.toDate = moment().toDate();
+    this.todaysDate = moment().toDate();
     this.formNewRioModel = this.fb.group({
       fromDate: new FormControl('', Validators.required),
       toDate: new FormControl('', Validators.required)      
@@ -333,7 +335,7 @@ export class PurchaseReportComponent implements OnInit {
 
   private saveExcelFile(): void {
     if(this.isForExport == true){
-      const fileName: string = "Purchase_Report.xlsx";
+      const fileName: string = "Purchase_Report_" + moment(this.todaysDate).format('DD_MMM_YYYY') + ".xlsx";
     const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.rows);
     this.changeHeaders(ws);
     const wb: XLSX.WorkBook = { Sheets: { 'data': ws }, SheetNames: ['data'] };
@@ -354,7 +356,7 @@ export class PurchaseReportComponent implements OnInit {
       {wch:16},
       {wch:23},
       {wch:13},
-      {wch:1},
+      {wch:11},
       {wch:14},
   ];
 
