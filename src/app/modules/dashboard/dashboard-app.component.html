@@ -2,9 +2,29 @@
     <!-- <p class="page-title">Dashboard Master</p> -->
     <div class="ui-g-12">
         <!-- ---------------------- Cards Container Component ---------------------- -->
-
+        <div class="ui-g-5">
+            <div class="ui-g-12">
+                <ym-cards *ngIf="showCards" [cardsJson]="cardsJson1"></ym-cards>
+            </div>
+            <div class="ui-g-12" style="margin-top: -32px;">
+                <div class="ui-g-3" style="width: 120px;">
+                    
+                </div> 
+                <div class="ui-g-6">
+                    <ym-cards *ngIf="showCards" [cardsJson]="cardsJson2"></ym-cards>
+                </div> 
+                <div class="ui-g-3">
+                    
+                </div>      
+            </div>   
+            
+        </div>
+        <div class="ui-g-2"></div>
+        <div class="ui-g-5">
         <ym-cards *ngIf="showCards" [cardsJson]="cardsJson"></ym-cards>
     </div>
+    </div>
+   
     <div class="ui-g borderMain">
         <div class="ui-g-12 shortcuts">
             <p>Shortcuts</p>

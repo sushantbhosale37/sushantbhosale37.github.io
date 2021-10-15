@@ -12,7 +12,7 @@ export class FetchApiDataService {
 
   getCardData() {
     const url = `${this.BASE_URL}/commonMaster/GetMasterData`;
-    return this.http.post(url, {});
+    return this.http.get(url, {});
   }
 
 }

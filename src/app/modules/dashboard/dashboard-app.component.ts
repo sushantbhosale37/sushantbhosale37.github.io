@@ -20,6 +20,8 @@ export class DashboardAppComponent implements OnInit, OnDestroy {
   filtersApplied: object = {};
   appConfig: object = {};
   cardsJson = [];
+  cardsJson1 = [];
+  cardsJson2 = [];
   showCards = false;
   constructor(
     public libServ: CommonLibService,
@@ -32,78 +34,75 @@ export class DashboardAppComponent implements OnInit, OnDestroy {
 
     this.cardsJson = [
       {
-        field: 'total_Customer',
-        displayName: 'Total Customer',
+        field: 'todays_Sales',
+        displayName: 'Todays Sales',
         value: 0,
-        imageClass: 'fas fa-eye',
+        imageClass: 'fas fa-cart-arrow-down',
         format: 'number',
         config: [],
         color: '#bd94ff'
       },
       {
-        field: 'total_Product',
-        displayName: 'Total Product',
+        field: 'todays_Purchase',
+        displayName: 'Todays Purchase',
         value: 0,
-        imageClass: 'fas fa-eye',
+        imageClass: 'fas fa-truck',
         format: 'number',
         config: [],
         color: '#7dd4ee'
       },
       {
-        field: 'total_Sale_TRN',
-        displayName: 'Total Sales Transaction',
+        field: 'todays_Done',
+        displayName: 'Todays Done',
         value: 0,
-        imageClass: 'fas fa-eye',
+        imageClass: 'fas fa-check-circle',
         format: 'number',
         config: [],
         color: '#71e071'
       },
       {
-        field: 'total_advOrder',
-        displayName: 'Total Order',
+        field: 'todays_Cancel',
+        displayName: 'Todays Cancel',
         value: 0,
-        imageClass: 'fas fa-hand-holding-usd',
+        imageClass: 'fas fa-times-circle',
         format: 'number',
         config: [],
-        color: '#ffa500'
-      },
-      {
-        field: 'total_Done',
-        displayName: 'Total Done Order',
-        value: 0,
-        imageClass: 'fas fa-dollar-sign',
-        format: 'number',
-        config: [],
-        color: '#e27197'
-      },
+        color: 'red'
+      }
+
+    ];
+
+    this.cardsJson1 = [           
       {
         field: 'total_Ready',
-        displayName: 'Total Ready Order',
+        displayName: 'Total Ready',
         value: 0,
-        imageClass: 'fas fa-percent',
+        imageClass: 'fas fa-bread-slice',
         format: 'number',
-        config: [2],
+        config: [],
         color: '#FFDC00'
       },
       {
         field: 'total_Pending',
-        displayName: 'Total Pending Order',
+        displayName: 'Total Pending',
         value: 0,
-        imageClass: 'fas fa-funnel-dollar',
+        imageClass: 'fas fa-mitten',
         format: 'number',
         config: [],
-        color: '#8094f2'
+        color: '#e27197'
       },
-      {
-        field: 'total_Cancel',
-        displayName: 'Total Cancel Order',
-        value: 0,
-        imageClass: 'fas fa-file-invoice-dollar',
-        format: 'number',
-        config: [],
-        color: '#f28a9d'
-      },
+    ];
 
+    this.cardsJson2 = [
+      {
+        field: 'total_Available_Cake',
+        displayName: 'Total Available Cake',
+        value: 0,
+        imageClass: 'fas fa-birthday-cake',
+        format: 'number',
+        config: [],
+        color: '#0ABF12'
+      },
     ];
     this.loadCards();
 
@@ -112,14 +111,40 @@ export class DashboardAppComponent implements OnInit, OnDestroy {
   loadCards() {
     this.showCards = false;
     this.dataFetchServ.getCardData().subscribe(res => {
+      debugger;
       let ProdCategory = [];
       if (!this.libServ.isEmptyObj(res['table'])) {
         this.cardsJson.map(o => {
           o['value'] = res['table'][0][o['field']];
         });
-        this.cardsJson[3]['value'] = res['table'][0]['total_Done'] + res['table'][0]['total_Ready'] + res['table'][0]['total_Pending'] + res['table'][0]['total_Cancel']
+
+        this.cardsJson1.map(o => {
+          o['value'] = res['table'][0][o['field']];
+        });
+
+        this.cardsJson2.map(o => {
+          o['value'] = res['table'][0][o['field']];
+        });
+
+        this.cardsJson[0]['value'] = res['table'][0]['todays_Sales'];
+        this.cardsJson[0]['value'] = res['table'][0]['todays_Purchase']; 
+        this.cardsJson[0]['value'] = res['table'][0]['total_Done'] ;
+        this.cardsJson[0]['value'] = res['table'][0]['total_Cancel'];
+
+        this.cardsJson1[0]['value'] = res['table'][0]['total_Ready'];
+        this.cardsJson1[1]['value'] = res['table'][0]['total_Pending'];
+
+        this.cardsJson2[0]['value'] = res['table'][0]['total_Available_Cake'];
       } else {
         this.cardsJson.map(o => {
+          o['value'] = 0;
+        });
+
+        this.cardsJson1.map(o => {
+          o['value'] = 0;
+        });
+
+        this.cardsJson2.map(o => {
           o['value'] = 0;
         });
       }
